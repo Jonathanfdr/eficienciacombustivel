@@ -1,11 +1,9 @@
 # Calculadora de Eficiência de Combústivel
 
-## Propósito
-
 Descrever o propósito da aplicação
 
 ## Menu
-- [Propósito](#propósito)
+- [Propósito](#calculadora-de-eficiência-de-combústivel)
 - [Modelagem](#modelagem)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Como Utilizar](#como-utilizar)
@@ -43,3 +41,30 @@ Descrever como executar a aplicação
 
 Descrerver como utilizar usando o heroku
 
+#### Ambiente Local
+
+Descrerver como utilizar usando ambiente local
+
+### Endpoints
+
+Documentar endpoints
+
+### Interface Banco de Dados H2
+
+Detalhar a possíbilidade de acessar o H2
+
+### Utilização via Postamn
+
+Detalhar como utilizar via postman
+
+### Exemplos
+
+#### Listar
+
+#### Detalhar
+
+#### Criar
+
+#### Excluir
+
+#### Rankear
