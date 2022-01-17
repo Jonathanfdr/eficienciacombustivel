@@ -7,7 +7,7 @@ Descrever o propósito da aplicação
 ## :page_facing_up: Menu
 - [Propósito](#propósito)
 - [Modelagem](#modelagem)
-- [Tecnologias Utilizadas](-#tecnologias-utilizadas-)
+- [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Como Utilizar](-#como-utilizar-)
   - [Executando a Aplicação](#-executando-a-aplicacao-)
     - [Utilizando Serviço no Heroku](#utilizando-servico-no-heroku-)
