@@ -1,12 +1,12 @@
 # Calculadora de Eficiência de Combústivel
 
-## Propósito
+## :man_office_worker: Propósito
 
 Descrever o propósito da aplicação
 
-## Menu
+## :page_facing_up: Menu
 - [Propósito](#propósito)
-- [Modelagem](-#modelagem-)
+- [Modelagem](#modelagem)
 - [Tecnologias Utilizadas](-#tecnologias-utilizadas-)
 - [Como Utilizar](-#como-utilizar-)
   - [Executando a Aplicação](#-executando-a-aplicacao-)
