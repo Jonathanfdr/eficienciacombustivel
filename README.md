@@ -5,7 +5,7 @@
 Descrever o propósito da aplicação
 
 ## :page_facing_up: Menu
-- [Propósito](#propósito)
+- [Propósito](#:man_office_worker:-propósito)
 - [Modelagem](#modelagem)
 - [Tecnologias Utilizadas](-#tecnologias-utilizadas-)
 - [Como Utilizar](-#como-utilizar-)
