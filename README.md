@@ -5,7 +5,7 @@
 Descrever o propósito da aplicação
 
 ## Menu
-- [Propósito](#proposito)
+- [Propósito](#propósito)
 - [Modelagem](-#modelagem-)
 - [Tecnologias Utilizadas](-#tecnologias-utilizadas-)
 - [Como Utilizar](-#como-utilizar-)
