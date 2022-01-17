@@ -4,7 +4,7 @@
 
 Descrever o propósito da aplicação
 
-## :page_facing_up: Menu
+## Menu
 - [Propósito](#propósito)
 - [Modelagem](#modelagem)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
