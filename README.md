@@ -3,12 +3,13 @@
 Aplicação desenvolvida a partir do desafio proposto no processo seletivo da empresa Totvs S.A.
 
 O objetivo do desafio é, dado um cadastro de veículos com seu respectivo desempenho dentro da cidade e em rodovias, rankear estes veículos em termos de consumo de combústivel.
+
 A descrição completa do desafio pode ser encontrada [aqui](https://drive.google.com/file/d/1SpoF1dtjdl2xni4XPECxVDae5J9JMjoT/view).
 
 ## Menu
 - [Propósito](#calculadora-de-eficiência-de-combústivel)
-- [Modelagem](#modelagem)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
+- [Modelagem](#modelagem)
 - [Como Utilizar](#como-utilizar)
   - [Executando a Aplicação](#executando-a-aplicação)
     - [Utilizando Serviço no Heroku](#utilizando-serviço-no-heroku)
@@ -24,13 +25,18 @@ A descrição completa do desafio pode ser encontrada [aqui](https://drive.googl
     - [Excluir](#excluir)
     - [Rankear](#rankear)
 
-## Modelagem
-
-Descrever a modelagem
-
 ## Tecnologias Utilizadas
 
-Descrever as tecnologias utilizadas
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=java&logoColor=white)
+![Apache Maven](https://img.shields.io/badge/Apache%20Maven-C71A36?style=for-the-badge&logo=Apache%20Maven&logoColor=white)
+![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
+![Eclipse](https://img.shields.io/badge/Eclipse-FE7A16.svg?style=for-the-badge&logo=Eclipse&logoColor=white)
+![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)
+![Heroku](https://img.shields.io/badge/heroku-%23430098.svg?style=for-the-badge&logo=heroku&logoColor=white)
+
+## Modelagem
+
+Para o desenvolvimento da solução.
 
 ## Como Utilizar
 
