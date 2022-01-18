@@ -1,4 +1,4 @@
-# Calculadora de Eficiência de Combústivel
+# :red_car: Calculadora de Eficiência de Combústivel :truck:
 
 Aplicação desenvolvida a partir do desafio proposto no processo seletivo da empresa [Totvs S.A](https://www.totvs.com/).
 
