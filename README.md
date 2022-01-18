@@ -53,7 +53,7 @@ A aplicação pode ser executada por diversos métodos, entretanto, serão lista
 
 #### Utilizando Serviço no Heroku
 
-A API já se encontra disponível em um container na plataforma [Heroku](http://heroku.com/). Portanto, se for optado por utilizar a aplicação sem a necessidade desta ser local, basta utilizar o endereço ht<span>tps://</span>eficienciacombustivel.herokuapp.com" nos próximos passos.
+A API já se encontra disponível em um container na plataforma [Heroku](http://heroku.com/). Portanto, se for optado por utilizar a aplicação sem a necessidade desta ser local, basta utilizar o endereço "ht<span>tps://</span>eficienciacombustivel.herokuapp.com" nos próximos passos.
 
 #### Ambiente Local
 
