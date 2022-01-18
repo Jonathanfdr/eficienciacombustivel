@@ -59,14 +59,20 @@ A API já se encontra disponível em um container na plataforma [Heroku](http://
 
 Para a utilização em ambiente local, alguns pré-requisitos são necessários.
 - [JDK 8 ou superior](https://developers.redhat.com/products/openjdk/download)
-- [Eclipse IDE para Java EE (qualquer versão lançada após 2018)](https://download.eclipse.org/eclipse/downloads/)
+- [Eclipse IDE para Java EE](https://download.eclipse.org/eclipse/downloads/) (qualquer versão lançada após 2018)
 - [Lombok](https://projectlombok.org/)
 
 Dentro da IDE eclipse, deve-se importar o projeto maven disponibilizado neste repositório através do caminho File -> Import -> Existing Maven Projects.
 
-Em seguida, clicar com o botão direito na raiz do projeto importado e no menu de contexto acessar Run As -> Java Application.
+Em seguida, clicar com o botão direito na raiz do projeto importado e no menu de contexto acessar: Run As -> Java Application.
 
-Caso não ocorra nenhum erro, basta acessar o endereço http://localhost:8080 no 
+Caso não ocorra nenhum erro, basta acessar o endereço http://localhost:8080/veiculo no navegador. Se o resultado for um JSON com alguns veículos listados, a aplicação já está rodando.
+
+Se alguma aplicação já estiver utilizando a porta 8080, basta que o arquivo [application.properties](https://github.com/Jonathanfdr/eficienciacombustivel/blob/main/src/main/resources/application.properties) seja alterado e a seguinte linha seja adicionada, substituindo "PORTA_DISPONIVEL" por uma porta disponível na máquina local:
+
+```
+server.port=PORTA_DISPONIVEL
+```
 
 ### Endpoints
 
