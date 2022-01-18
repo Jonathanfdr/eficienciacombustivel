@@ -43,7 +43,9 @@ A descrição completa do desafio pode ser encontrada [aqui](https://drive.googl
 
 Para o desenvolvimento da solução, foi elaborado um esquema relacional das entidades a serem utilizadas, resultando no modelo abaixo:
 
-![Modelo](https://drive.google.com/uc?export=view&id=1plAggScy5RW_f9ePTaZB9hPrpF8dD8Hf)
+<p align="center">
+  <img src="https://drive.google.com/uc?export=view&id=1plAggScy5RW_f9ePTaZB9hPrpF8dD8Hf"/>
+</p>
 
 ## Como Utilizar
 
@@ -91,7 +93,9 @@ Devido a utilização da tecnologia Swagger-Ui, todos os endpoints, payloads e p
 ```
 URL_PADRAO/swagger-ui.html
 ```
-*Imagem do swagger*
+<p align="center">
+  <img src="https://drive.google.com/uc?export=view&id=1nan5LQf3Hf0NKmj8ET38IRHR-Hq_wz4E"/>
+</p>
 
 Entretanto, serão listadas aqui descrições de todos os endpoints da aplicação:
 
