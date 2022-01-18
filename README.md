@@ -95,24 +95,24 @@ URL_PADRAO/swagger-ui.html
 
 Entretanto, serão listadas aqui descrições de todos os endpoints da aplicação:
 
-|   *MÉTODO*   | *PRIMITIVA*                          | *DESCRIÇÃO*                                                                           |
-|--------------|--------------------------------------|---------------------------------------------------------------------------------------|
-| GET          | URL_PADRAO/marca                     | Lista todas as marcas de veículos cadastradas                                         |
-| POST         | URL_PADRAO/marca                     | Cadastra uma nova marca                                                               |
-| GET          | URL_PADRAO/marca/{id}                | Detalha uma marca de id={id}                                                          |
-| PUT          | URL_PADRAO/marca/{id}                | Altera uma marca de id={id}                                                           |
-| DELETE       | URL_PADRAO/marca/{id}                | Deleta uma marca de id={id}                                                           |
-| GET          | URL_PADRAO/modelo                    | Lista todos os modelos de veículos cadastrados                                        |
-| POST         | URL_PADRAO/modelo                    | Cadastra um novo modelo                                                               |
-| GET          | URL_PADRAO/modelo/{id}               | Detalha um modelo de id={id}                                                          |
-| PUT          | URL_PADRAO/modelo/{id}               | Altera um modelo de id={id}                                                           |
-| DELETE       | URL_PADRAO/modelo/{id}               | Deleta um modelo de id={id}                                                           |
-| GET          | URL_PADRAO/veiculo                   | Lista todos os veículos cadastrados                                                   |
-| POST         | URL_PADRAO/veiculo                   | Cadastra um novo veículo                                                              |
-| GET          | URL_PADRAO/veiculo/{id}              | Detalha um veículo de id={id}                                                         |
-| PUT          | URL_PADRAO/veiculo/{id}              | Altera um veículo de id={id}                                                          |
-| DELETE       | URL_PADRAO/veiculo/{id}              | Deleta um veículo de id={id}                                                          |
-| GET          | URL_PADRAO/veiculo/rankingEficiencia | Lista um ranking dos veículos que tiverem melhor desempenho na circunstância apontada |
+|   *MÉTODO*   |              *PRIMITIVA*             |                                                    *DESCRIÇÃO*                                                   |
+|:------------:|:------------------------------------:|:----------------------------------------------------------------------------------------------------------------:|
+| GET          | URL_PADRAO/marca                     | Lista todas as marcas de veículos cadastradas.                                                                   |
+| POST         | URL_PADRAO/marca                     | Cadastra uma nova marca.                                                                                         |
+| GET          | URL_PADRAO/marca/{id}                | Detalha uma marca onde ``id={id}``.                                                                              |
+| PUT          | URL_PADRAO/marca/{id}                | Altera uma marca onde ``id={id}``.                                                                               |
+| DELETE       | URL_PADRAO/marca/{id}                | Deleta uma marca onde ``id={id}``.                                                                               |
+| GET          | URL_PADRAO/modelo                    | Lista todos os modelos de veículos cadastrados.                                                                  |
+| POST         | URL_PADRAO/modelo                    | Cadastra um novo modelo.                                                                                         |
+| GET          | URL_PADRAO/modelo/{id}               | Detalha um modelo onde ``id={id}``.                                                                              |
+| PUT          | URL_PADRAO/modelo/{id}               | Altera um modelo onde ``id={id}``.                                                                               |
+| DELETE       | URL_PADRAO/modelo/{id}               | Deleta um modelo onde ``id={id}``.                                                                               |
+| GET          | URL_PADRAO/veiculo                   | Lista todos os veículos cadastrados.                                                                             |
+| POST         | URL_PADRAO/veiculo                   | Cadastra um novo veículo.                                                                                        |
+| GET          | URL_PADRAO/veiculo/{id}              | Detalha um veículo onde ``id={id}``.                                                                             |
+| PUT          | URL_PADRAO/veiculo/{id}              | Altera um veículo onde ``id={id}``.                                                                              |
+| DELETE       | URL_PADRAO/veiculo/{id}              | Deleta um veículo onde ``id={id}``.                                                                              |
+| GET          | URL_PADRAO/veiculo/rankingEficiencia | Lista um ranking dos veículos que tiverem melhor desempenho na circunstância apontada. Fórmula [aqui](#rankear). |
 
 
 ### Interface Banco de Dados H2
@@ -157,13 +157,25 @@ Listagem de todos os veículos cadastrados:
 
 Detalhando o veículo de ``id=2``:
 
+*imagem*
+
 #### Criar
 
 Criando um novo veículo:
 
+*imagem*
+
+#### Alerar
+
+Alterando o veículo de ``id=2``:
+
+*imagem*
+
 #### Excluir
 
 Excluindo o veículo de ``id=2``:
+
+*imagem*
 
 #### Rankear
 
@@ -177,3 +189,5 @@ litrosRodovia = distanciaPercorridaRodovia / consumoRodovia;
 quantidadeTotalCombustivel = litrosCidade + litrosRodovia;
 precoTotalCombustivel = quantidadeTotalCombustivel * precoCombustivel;
 ```
+
+*imagem*
