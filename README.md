@@ -41,19 +41,19 @@ A descrição completa do desafio pode ser encontrada [aqui](https://drive.googl
 
 ## Modelagem
 
-Para o desenvolvimento da solução.
+Para o desenvolvimento da solução, foi elaborado um esquema relacional das entidades a serem utilizadas, resultando no modelo abaixo:
+
+*colocar modelo*
 
 ## Como Utilizar
 
-Descrever como utilizar
-
 ### Executando a Aplicação
 
-Descrever como executar a aplicação
+A aplicação pode ser executada por diversos métodos, entretanto, listarei aqui apenas 2. 
 
 #### Utilizando Serviço no Heroku
 
-Descrerver como utilizar usando o heroku
+A API já se encontra disponível em um container na plataforma [Heroku](http://heroku.com/). Portanto, se for optado por utilizar a aplicação sem a necessidade desta ser local, basta utilizar o endereço "https://eficienciacombustivel.herokuapp.com/" nos próximos passos.
 
 #### Ambiente Local
 
