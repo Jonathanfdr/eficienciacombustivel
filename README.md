@@ -1,4 +1,4 @@
-# :red_car: Calculadora de Eficiência de Combústivel :truck:
+# :fuelpump: Calculadora de Eficiência de Combústivel :fuelpump:
 
 Aplicação desenvolvida a partir do desafio proposto no processo seletivo da empresa [Totvs S.A](https://www.totvs.com/).
 
@@ -7,7 +7,7 @@ O objetivo do desafio é dado um cadastro de veículos, com seu respectivo desem
 A descrição completa do desafio pode ser encontrada [aqui](https://drive.google.com/file/d/1SpoF1dtjdl2xni4XPECxVDae5J9JMjoT/view) e o resultado final pode ser observado no [endpoint](#endpoints) [deste exemplo](#rankear)
 
 ## Menu
-- [Propósito](#calculadora-de-eficiência-de-combústivel)
+- [Propósito](-#calculadora-de-eficiência-de-combústivel-)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Modelagem](#modelagem)
 - [Como Utilizar](#como-utilizar)
