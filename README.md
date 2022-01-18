@@ -49,7 +49,7 @@ Para o desenvolvimento da solução, foi elaborado um esquema relacional das ent
 
 ### Executando a Aplicação
 
-A aplicação pode ser executada por diversos métodos, entretanto, listarei aqui apenas 2. 
+A aplicação pode ser executada por diversos métodos, entretanto, serão listadas aqui apenas 2. 
 
 #### Utilizando Serviço no Heroku
 
