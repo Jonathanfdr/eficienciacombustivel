@@ -170,8 +170,8 @@ Ranking por eficiência de combustível, onde foram percorridos 10Km na cidade, 
 Obs: O cálculo da quantidade total de combustível e o preço total se dá pelo seguinte algoritmo:
 
 ```
-litrosCidade = distanciaPercorridaCidade/consumoCidade;
-litrosRodovia = distanciaPercorridaRodovia/consumoRodovia;
-quantidadeTotalCombustivel = litrosCidade+litrosRodovia;
+litrosCidade = distanciaPercorridaCidade / consumoCidade;
+litrosRodovia = distanciaPercorridaRodovia / consumoRodovia;
+quantidadeTotalCombustivel = litrosCidade + litrosRodovia;
 precoTotalCombustivel = quantidadeTotalCombustivel * precoCombustivel;
 ```
