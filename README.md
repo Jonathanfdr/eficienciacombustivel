@@ -57,7 +57,16 @@ A API já se encontra disponível em um container na plataforma [Heroku](http://
 
 #### Ambiente Local
 
-Descrerver como utilizar usando ambiente local
+Para a utilização em ambiente local, alguns pré-requisitos são necessários.
+- [JDK 8 ou superior](https://developers.redhat.com/products/openjdk/download)
+- [Eclipse IDE para Java EE (qualquer versão lançada após 2018)](https://download.eclipse.org/eclipse/downloads/)
+- [Lombok](https://projectlombok.org/)
+
+Dentro da IDE eclipse, deve-se importar o projeto maven disponibilizado neste repositório através do caminho File -> Import -> Existing Maven Projects.
+
+Em seguida, clicar com o botão direito na raiz do projeto importado e no menu de contexto acessar Run As -> Java Application.
+
+Caso não ocorra nenhum erro, basta acessar o endereço http://localhost:8080 no 
 
 ### Endpoints
 
