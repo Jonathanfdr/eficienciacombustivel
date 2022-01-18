@@ -155,31 +155,41 @@ Abaixo serão exibidos exemplos baseados na entidade ``veiculo`` utilizando o Po
 
 Listagem de todos os veículos cadastrados:
 
-*imagem*
+<p align="center">
+  <img src="https://drive.google.com/uc?export=view&id=10Iyzdt1Q1VmxvMf2lnO1LGRuXcnREDbC"/>
+</p>
 
 #### Detalhar
 
 Detalhando o veículo de ``id=2``:
 
-*imagem*
+<p align="center">
+  <img src="https://drive.google.com/uc?export=view&id=1QfCJSL7UKas-SuwBD3LBkdqK4IbHRG9b"/>
+</p>
 
 #### Criar
 
 Criando um novo veículo:
 
-*imagem*
+<p align="center">
+  <img src="https://drive.google.com/uc?export=view&id=1cbk9PilX5HFM_nA4AzDo347rsm7qDQcX"/>
+</p>
 
-#### Alerar
+#### Alterar
 
 Alterando o veículo de ``id=2``:
 
-*imagem*
+<p align="center">
+  <img src="https://drive.google.com/uc?export=view&id=16gPfxfzKv7o8Pps3CnkBN4WVIFDjidgr"/>
+</p>
 
 #### Excluir
 
 Excluindo o veículo de ``id=2``:
 
-*imagem*
+<p align="center">
+  <img src="https://drive.google.com/uc?export=view&id=16KIOIOdVcWThxSgiCS7e5bsrlFwmuahp"/>
+</p>
 
 #### Rankear
 
@@ -194,4 +204,6 @@ quantidadeTotalCombustivel = litrosCidade + litrosRodovia;
 precoTotalCombustivel = quantidadeTotalCombustivel * precoCombustivel;
 ```
 
-*imagem*
+<p align="center">
+  <img src="https://drive.google.com/uc?export=view&id=1pT88_dQ7azUKOlSt5UW2gcPFqESFtcTy"/>
+</p>
