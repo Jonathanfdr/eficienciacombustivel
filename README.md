@@ -62,13 +62,13 @@ Para a utilização em ambiente local, alguns pré-requisitos são necessários.
 - [Eclipse IDE para Java EE](https://download.eclipse.org/eclipse/downloads/) (qualquer versão lançada após 2018)
 - [Lombok](https://projectlombok.org/)
 
-Dentro da IDE eclipse, deve-se importar o projeto maven disponibilizado neste repositório através do caminho File -> Import -> Existing Maven Projects.
+Dentro da IDE eclipse, deve-se importar o projeto maven disponibilizado neste repositório através do caminho ``File -> Import -> Existing Maven Projects``.
 
-Em seguida, clicar com o botão direito na raiz do projeto importado e no menu de contexto acessar: Run As -> Java Application.
+Em seguida, clicar com o botão direito na raiz do projeto importado e no menu de contexto acessar: ``Run As -> Java Application``.
 
 Caso não ocorra nenhum erro, basta acessar o endereço http://localhost:8080/veiculo no navegador. Se o resultado for um JSON com alguns veículos listados, a aplicação já está rodando.
 
-Se alguma aplicação já estiver utilizando a porta 8080, basta que o arquivo [application.properties](https://github.com/Jonathanfdr/eficienciacombustivel/blob/main/src/main/resources/application.properties) seja alterado e a linha abaixo seja adicionada, substituindo "PORTA_DISPONIVEL" por uma porta disponível na máquina local:
+Se alguma aplicação já estiver utilizando a porta 8080, basta que o arquivo [application.properties](https://github.com/Jonathanfdr/eficienciacombustivel/blob/main/src/main/resources/application.properties) seja alterado e a linha abaixo seja adicionada, substituindo ``PORTA_DISPONIVEL`` por uma porta disponível na máquina local:
 
 ```
 server.port=PORTA_DISPONIVEL
@@ -76,48 +76,48 @@ server.port=PORTA_DISPONIVEL
 
 ### Endpoints
 
-O caminho completo das primitivas irá variar de acordo com o ambiente escolhido. Deste ponto em diante o domínio e/ou a porta da aplicação serão resumidos a *URL_PADRAO*. Para execução utilizando o serviço no Heroku:
+O caminho completo das primitivas irá variar de acordo com o ambiente escolhido. Deste ponto em diante o domínio e/ou a porta da aplicação serão resumidos a ``URL_PADRAO``. Para execução utilizando o serviço no Heroku:
 ```
-URL=https://eficienciacombustivel.herokuapp.com/
+URL_PADRAO=https://eficienciacombustivel.herokuapp.com/
 ```
 Para execução local (onde porta é a porta escolhida no [tópico anterior](#ambiente-local)):
 ```
-URL=https://localhost:PORTA
+URL_PADRAO=https://localhost:PORTA
 ```
 
 Devido a utilização da tecnologia Swagger-Ui, todos os endpoints, payloads e possíveis respostas, são documentados no próprio serviço acessando o endereço.
 ```
-URL/swagger-ui.html
+URL_PADRAO/swagger-ui.html
 ```
 *Imagem do swagger*
 
 Entretanto, serão listadas aqui descrições de todos os endpoints da aplicação:
 
-|   *#MÉTODO*   | *ENDPOINT*                    | *DESCRIÇÃO*                                                                           |
-|--------------|-------------------------------|---------------------------------------------------------------------------------------|
-| GET          | URL/marca                     | Lista todas as marcas de veículos cadastradas                                         |
-| POST         | URL/marca                     | Cadastra uma nova marca                                                               |
-| GET          | URL/marca/{id}                | Detalha uma marca de id={id}                                                          |
-| PUT          | URL/marca/{id}                | Altera uma marca de id={id}                                                           |
-| DELETE       | URL/marca/{id}                | Deleta uma marca de id={id}                                                           |
-| GET          | URL/modelo                    | Lista todos os modelos de veículos cadastrados                                        |
-| POST         | URL/modelo                    | Cadastra um novo modelo                                                               |
-| GET          | URL/modelo/{id}               | Detalha um modelo de id={id}                                                          |
-| PUT          | URL/modelo/{id}               | Altera um modelo de id={id}                                                           |
-| DELETE       | URL/modelo/{id}               | Deleta um modelo de id={id}                                                           |
-| GET          | URL/veiculo                   | Lista todos os veículos cadastrados                                                   |
-| POST         | URL/veiculo                   | Cadastra um novo veículo                                                              |
-| GET          | URL/veiculo/{id}              | Detalha um veículo de id={id}                                                         |
-| PUT          | URL/veiculo/{id}              | Altera um veículo de id={id}                                                          |
-| DELETE       | URL/veiculo/{id}              | Deleta um veículo de id={id}                                                          |
-| GET          | URL/veiculo/rankingEficiencia | Lista um ranking dos veículos que tiverem melhor desempenho na circunstância apontada |
+|   *MÉTODO*   | *PRIMITIVA*                          | *DESCRIÇÃO*                                                                           |
+|--------------|--------------------------------------|---------------------------------------------------------------------------------------|
+| GET          | URL_PADRAO/marca                     | Lista todas as marcas de veículos cadastradas                                         |
+| POST         | URL_PADRAO/marca                     | Cadastra uma nova marca                                                               |
+| GET          | URL_PADRAO/marca/{id}                | Detalha uma marca de id={id}                                                          |
+| PUT          | URL_PADRAO/marca/{id}                | Altera uma marca de id={id}                                                           |
+| DELETE       | URL_PADRAO/marca/{id}                | Deleta uma marca de id={id}                                                           |
+| GET          | URL_PADRAO/modelo                    | Lista todos os modelos de veículos cadastrados                                        |
+| POST         | URL_PADRAO/modelo                    | Cadastra um novo modelo                                                               |
+| GET          | URL_PADRAO/modelo/{id}               | Detalha um modelo de id={id}                                                          |
+| PUT          | URL_PADRAO/modelo/{id}               | Altera um modelo de id={id}                                                           |
+| DELETE       | URL_PADRAO/modelo/{id}               | Deleta um modelo de id={id}                                                           |
+| GET          | URL_PADRAO/veiculo                   | Lista todos os veículos cadastrados                                                   |
+| POST         | URL_PADRAO/veiculo                   | Cadastra um novo veículo                                                              |
+| GET          | URL_PADRAO/veiculo/{id}              | Detalha um veículo de id={id}                                                         |
+| PUT          | URL_PADRAO/veiculo/{id}              | Altera um veículo de id={id}                                                          |
+| DELETE       | URL_PADRAO/veiculo/{id}              | Deleta um veículo de id={id}                                                          |
+| GET          | URL_PADRAO/veiculo/rankingEficiencia | Lista um ranking dos veículos que tiverem melhor desempenho na circunstância apontada |
 
 
 ### Interface Banco de Dados H2
 
 Outra tecnologia utilizada para o desafio foi o banco de dados relacional H2. Para visualizar os registros e montar Querys deste banco de dados foi disponibilizado sua interface gráfica no endereço
 ```
-URL/h2-console
+URL_PADRAO/h2-console
 ```
 Os dados para acesso ao banco de dados H2 estão apontados no arquivo [application.properties](https://github.com/Jonathanfdr/eficienciacombustivel/blob/main/src/main/resources/application.properties).
 Note que em ambiente local, sempre que o serviço é reiniciado, os cadastros também são, se esta for uma configuração indesejada, basta alterar o arquivo [application.properties](https://github.com/Jonathanfdr/eficienciacombustivel/blob/main/src/main/resources/application.properties) na linha onde se lê:
@@ -132,23 +132,46 @@ spring.jpa.hibernate.ddl-auto=update
 
 ### Utilização via Postamn
 
-Na sequência, será utilizado o postman para exemplificar requisições a alguns endpoints. As instruções de instalação do postman podem ser encontradas [aqui](https://www.postman.com/).
+Na sequência, será utilizado o Postman para exemplificar requisições a alguns endpoints. As instruções de instalação do Postman podem ser encontradas [aqui](https://www.postman.com/).
 
-Dentro do postman, para realizar alguma requisição, deve-se seguir os seguintes passos:
-- Acessar o menu File -> New -> Request.
+Dentro do Postman, para realizar alguma requisição, deve-se seguir os seguintes passos:
+- Acessar o menu ``File -> New -> Request``;
 - Alterar o [método](#endpoints) da requisição para o adequado;
-- Informar a URL da requisição;
-- Caso seja necessário algum payload na requisição, este deve ser informado na aba "Body", com o tipo "Raw" e texto "JSON";
-- Ao clicar em "Send", o resultado retornado será exibido no painel "Response".
+- Informar a URL da requisição (``URL_PADRAO``+``ENDPOINT``);
+- Caso seja necessário algum payload na requisição, este deve ser informado na aba ``Body``, com o tipo ``Raw`` e texto ``JSON``;
+- Ao clicar em ``Send``, o resultado retornado será exibido no painel ``Response``.
 
 ### Exemplos
 
+Abaixo serão exibidos exemplos baseados na entidade ``veiculo`` utilizando o Postman.
+
 #### Listar
+
+Listagem de todos os veículos cadastrados:
+
+*imagem*
 
 #### Detalhar
 
+Detalhando o veículo de ``id=2``:
+
 #### Criar
+
+Criando um novo veículo:
 
 #### Excluir
 
+Excluindo o veículo de ``id=2``:
+
 #### Rankear
+
+Ranking por eficiência de combustível, onde foram percorridos 10Km na cidade, 30Km em rodivias e o preço do combustível é R$6,50.
+
+Obs: O cálculo da quantidade total de combustível e o preço total se dá pelo seguinte algoritmo:
+
+``
+litrosCidade = distanciaPercorridaCidade/consumoCidade;
+litrosRodovia = distanciaPercorridaRodovia/consumoRodovia;
+quantidadeTotalCombustivel = litrosCidade+litrosRodovia;
+precoTotalCombustivel = quantidadeTotalCombustivel * precoCombustivel;
+``
