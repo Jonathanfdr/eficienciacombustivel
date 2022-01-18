@@ -93,19 +93,53 @@ URL/swagger-ui.html
 
 Entretanto, serão listadas aqui descrições de todos os endpoints da aplicação:
 
-| *MÉTODO* | *PRIMITIVA* | *DESCRIÇÃO* |
-|----------|-------------|-------------|
-|          |             |             |
-|          |             |             |
+|   *#MÉTODO*   | *ENDPOINT*                    | *DESCRIÇÃO*                                                                           |
+|--------------|-------------------------------|---------------------------------------------------------------------------------------|
+| GET          | URL/marca                     | Lista todas as marcas de veículos cadastradas                                         |
+| POST         | URL/marca                     | Cadastra uma nova marca                                                               |
+| GET          | URL/marca/{id}                | Detalha uma marca de id={id}                                                          |
+| PUT          | URL/marca/{id}                | Altera uma marca de id={id}                                                           |
+| DELETE       | URL/marca/{id}                | Deleta uma marca de id={id}                                                           |
+| GET          | URL/modelo                    | Lista todos os modelos de veículos cadastrados                                        |
+| POST         | URL/modelo                    | Cadastra um novo modelo                                                               |
+| GET          | URL/modelo/{id}               | Detalha um modelo de id={id}                                                          |
+| PUT          | URL/modelo/{id}               | Altera um modelo de id={id}                                                           |
+| DELETE       | URL/modelo/{id}               | Deleta um modelo de id={id}                                                           |
+| GET          | URL/veiculo                   | Lista todos os veículos cadastrados                                                   |
+| POST         | URL/veiculo                   | Cadastra um novo veículo                                                              |
+| GET          | URL/veiculo/{id}              | Detalha um veículo de id={id}                                                         |
+| PUT          | URL/veiculo/{id}              | Altera um veículo de id={id}                                                          |
+| DELETE       | URL/veiculo/{id}              | Deleta um veículo de id={id}                                                          |
+| GET          | URL/veiculo/rankingEficiencia | Lista um ranking dos veículos que tiverem melhor desempenho na circunstância apontada |
 
 
 ### Interface Banco de Dados H2
 
-Detalhar a possíbilidade de acessar o H2
+Outra tecnologia utilizada para o desafio foi o banco de dados relacional H2. Para visualizar os registros e montar Querys deste banco de dados foi disponibilizado sua interface gráfica no endereço
+```
+URL/h2-console
+```
+Os dados para acesso ao banco de dados H2 estão apontados no arquivo [application.properties](https://github.com/Jonathanfdr/eficienciacombustivel/blob/main/src/main/resources/application.properties).
+Note que em ambiente local, sempre que o serviço é reiniciado, os cadastros também são, se esta for uma configuração indesejada, basta alterar o arquivo [application.properties](https://github.com/Jonathanfdr/eficienciacombustivel/blob/main/src/main/resources/application.properties) na linha onde se lê:
+
+```
+spring.jpa.hibernate.ddl-auto=create
+```
+para
+```
+spring.jpa.hibernate.ddl-auto=update
+```
 
 ### Utilização via Postamn
 
-Detalhar como utilizar via postman
+Na sequência, será utilizado o postman para exemplificar requisições a alguns endpoints. As instruções de instalação do postman podem ser encontradas [aqui](https://www.postman.com/).
+
+Dentro do postman, para realizar alguma requisição, deve-se seguir os seguintes passos:
+- Acessar o menu File -> New -> Request.
+- Alterar o [método](#endpoints) da requisição para o adequado;
+- Informar a URL da requisição;
+- Caso seja necessário algum payload na requisição, este deve ser informado na aba "Body", com o tipo "Raw" e texto "JSON";
+- Ao clicar em "Send", o resultado retornado será exibido no painel "Response".
 
 ### Exemplos
 
