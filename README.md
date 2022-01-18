@@ -68,7 +68,7 @@ Em seguida, clicar com o botão direito na raiz do projeto importado e no menu d
 
 Caso não ocorra nenhum erro, basta acessar o endereço http://localhost:8080/veiculo no navegador. Se o resultado for um JSON com alguns veículos listados, a aplicação já está rodando.
 
-Se alguma aplicação já estiver utilizando a porta 8080, basta que o arquivo [application.properties](https://github.com/Jonathanfdr/eficienciacombustivel/blob/main/src/main/resources/application.properties) seja alterado e a seguinte linha seja adicionada, substituindo "PORTA_DISPONIVEL" por uma porta disponível na máquina local:
+Se alguma aplicação já estiver utilizando a porta 8080, basta que o arquivo [application.properties](https://github.com/Jonathanfdr/eficienciacombustivel/blob/main/src/main/resources/application.properties) seja alterado e a linha abaixo seja adicionada, substituindo "PORTA_DISPONIVEL" por uma porta disponível na máquina local:
 
 ```
 server.port=PORTA_DISPONIVEL
@@ -76,7 +76,28 @@ server.port=PORTA_DISPONIVEL
 
 ### Endpoints
 
-Documentar endpoints
+O caminho completo das primitivas irá variar de acordo com o ambiente escolhido. Deste ponto em diante o domínio e/ou a porta da aplicação serão resumidos a *URL_PADRAO*. Para execução utilizando o serviço no Heroku:
+```
+URL=https://eficienciacombustivel.herokuapp.com/
+```
+Para execução local (onde porta é a porta escolhida no [tópico anterior](#ambiente-local)):
+```
+URL=https://localhost:PORTA
+```
+
+Devido a utilização da tecnologia Swagger-Ui, todos os endpoints, payloads e possíveis respostas, são documentados no próprio serviço acessando o endereço.
+```
+URL/swagger-ui.html
+```
+*Imagem do swagger*
+
+Entretanto, serão listadas aqui descrições de todos os endpoints da aplicação:
+
+| *MÉTODO* | *PRIMITIVA* | *DESCRIÇÃO* |
+|----------|-------------|-------------|
+|          |             |             |
+|          |             |             |
+
 
 ### Interface Banco de Dados H2
 
