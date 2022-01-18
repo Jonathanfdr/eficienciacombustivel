@@ -16,7 +16,7 @@ A descrição completa do desafio pode ser encontrada [aqui](https://drive.googl
     - [Ambiente Local](#ambiente-local)
   - [Endpoints](#endpoints)
   - [Interface Banco de Dados H2](#interface-banco-de-dados-h2)
-  - [Utilização via Postamn](#utilização-via-postman)
+  - [Utilização via Postman](#utilização-via-postman)
   - [Exemplos](#exemplos)
     - [Listar](#listar)
     - [Detalhar](#detalhar)
@@ -130,7 +130,7 @@ para
 spring.jpa.hibernate.ddl-auto=update
 ```
 
-### Utilização via Postamn
+### Utilização via Postman
 
 Na sequência, será utilizado o Postman para exemplificar requisições a alguns endpoints. As instruções de instalação do Postman podem ser encontradas [aqui](https://www.postman.com/).
 
