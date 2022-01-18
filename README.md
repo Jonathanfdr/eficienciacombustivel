@@ -76,7 +76,9 @@ server.port=PORTA_DISPONIVEL
 
 ### Endpoints
 
-O caminho completo das primitivas irá variar de acordo com o ambiente escolhido. Deste ponto em diante o domínio e/ou a porta da aplicação serão resumidos a ``URL_PADRAO``. Para execução utilizando o serviço no Heroku:
+O caminho completo das primitivas irá variar de acordo com o ambiente escolhido. Deste ponto em diante o domínio e/ou a porta da aplicação serão resumidos a ``URL_PADRAO``. 
+
+Para execução utilizando o serviço no Heroku:
 ```
 URL_PADRAO=https://eficienciacombustivel.herokuapp.com/
 ```
