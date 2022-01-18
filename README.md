@@ -195,6 +195,10 @@ Excluindo o veículo de ``id=2``:
 
 Ranking por eficiência de combustível, onde foram percorridos 10Km na cidade, 30Km em rodivias e o preço do combustível é R$6,50.
 
+<p align="center">
+  <img src="https://drive.google.com/uc?export=view&id=1pT88_dQ7azUKOlSt5UW2gcPFqESFtcTy"/>
+</p>
+
 Obs: O cálculo da quantidade total de combustível e o preço total se dá pelo seguinte algoritmo:
 
 ```
@@ -203,7 +207,3 @@ litrosRodovia = distanciaPercorridaRodovia / consumoRodovia;
 quantidadeTotalCombustivel = litrosCidade + litrosRodovia;
 precoTotalCombustivel = quantidadeTotalCombustivel * precoCombustivel;
 ```
-
-<p align="center">
-  <img src="https://drive.google.com/uc?export=view&id=1pT88_dQ7azUKOlSt5UW2gcPFqESFtcTy"/>
-</p>
