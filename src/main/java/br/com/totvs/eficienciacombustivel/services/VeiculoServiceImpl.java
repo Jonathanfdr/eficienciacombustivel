@@ -37,7 +37,7 @@ public class VeiculoServiceImpl implements VeiculoService {
 	public Optional<VeiculoDto> detalhaVeiculo(Long id) {
 		Optional<Veiculo> veiculo = veiculoRepository.findById(id);
 		
-		if (veiculo.isEmpty()) 
+		if (!veiculo.isPresent()) 
 			return Optional.empty();
 		
 		return Optional.of(new VeiculoDto(veiculo.get()));
@@ -45,7 +45,7 @@ public class VeiculoServiceImpl implements VeiculoService {
 
 	@Override
 	public boolean isNomeUnico(String nome) {
-		return veiculoRepository.findByNome(nome).isEmpty();
+		return !veiculoRepository.findByNome(nome).isPresent();
 	}
 	
 	@Override
@@ -63,7 +63,7 @@ public class VeiculoServiceImpl implements VeiculoService {
 	
 	@Override
 	public boolean isNomeIdUnico(String nome, Long id) {
-		return veiculoRepository.findByNomeAndIdNot(nome, id).isEmpty();
+		return !veiculoRepository.findByNomeAndIdNot(nome, id).isPresent();
 	}
 
 	@Override

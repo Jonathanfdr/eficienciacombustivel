@@ -33,7 +33,7 @@ public class ModeloServiceImpl implements ModeloService {
 	public Optional<ModeloDto> detalhaModelo(Long id) {
 		Optional<Modelo> modelo = modeloRepository.findById(id);
 		
-		if (modelo.isEmpty()) 
+		if (!modelo.isPresent()) 
 			return Optional.empty();
 		
 		return Optional.of(new ModeloDto(modelo.get()));
@@ -41,7 +41,7 @@ public class ModeloServiceImpl implements ModeloService {
 	
 	@Override
 	public boolean isNomeUnico(String nome) {
-		return modeloRepository.findByNome(nome).isEmpty();
+		return !modeloRepository.findByNome(nome).isPresent();
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class ModeloServiceImpl implements ModeloService {
 
 	@Override
 	public boolean isNomeIdUnico(String nome, Long id) {
-		return modeloRepository.findByNomeAndIdNot(nome, id).isEmpty();
+		return !modeloRepository.findByNomeAndIdNot(nome, id).isPresent();
 	}
 
 	@Override

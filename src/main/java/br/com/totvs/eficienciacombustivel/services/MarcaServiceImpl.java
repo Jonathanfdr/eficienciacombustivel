@@ -28,7 +28,7 @@ public class MarcaServiceImpl implements MarcaService{
 	public Optional<MarcaDto> detalhaMarca(Long id) {
 		Optional<Marca> marca = marcaRepository.findById(id);
 		
-		if (marca.isEmpty()) 
+		if (!marca.isPresent()) 
 			return Optional.empty();
 		
 		return Optional.of(new MarcaDto(marca.get()));
@@ -36,7 +36,7 @@ public class MarcaServiceImpl implements MarcaService{
 	
 	@Override
 	public boolean isNomeUnico(String nome) {
-		return marcaRepository.findByNome(nome).isEmpty();
+		return !marcaRepository.findByNome(nome).isPresent();
 	}
 
 	@Override
@@ -48,7 +48,7 @@ public class MarcaServiceImpl implements MarcaService{
 
 	@Override
 	public boolean isNomeIdUnico(String nome, Long id) {
-		return marcaRepository.findByNomeAndIdNot(nome, id).isEmpty();
+		return !marcaRepository.findByNomeAndIdNot(nome, id).isPresent();
 	}
 
 	@Override
