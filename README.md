@@ -1,4 +1,4 @@
-# :fuelpump: Calculadora de Eficiência de Combústivel :fuelpump:
+# :fuelpump: Calculadora de Eficiência de Combustível :fuelpump:
 
 Aplicação desenvolvida a partir do desafio proposto no processo seletivo da empresa [Totvs S.A](https://www.totvs.com/).
 
