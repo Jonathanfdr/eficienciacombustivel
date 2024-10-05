@@ -2,7 +2,7 @@
 
 Aplicação desenvolvida a partir do desafio proposto no processo seletivo da empresa [Totvs S.A](https://www.totvs.com/).
 
-O objetivo do desafio é dado um cadastro de veículos, com seu respectivo desempenho dentro da cidade e em rodovias, rankear estes veículos em termos de consumo de combústivel.
+O objetivo do desafio é dado um cadastro de veículos, com seu respectivo desempenho dentro da cidade e em rodovias, rankear estes veículos em termos de consumo de combustível.
 
 A descrição completa do desafio pode ser encontrada [aqui](https://drive.google.com/file/d/1C6-AJ51EF8-LoOrg9Vwb8ECm4Q5fMhYx/view) e o resultado final pode ser observado no [endpoint](#endpoints) [deste exemplo](#rankear)
 
