@@ -164,12 +164,12 @@
 			<wsdl:output wsam:Action="http://www.totvs.com/IRMSServer/CheckServiceActivityResponse" message="tns:IRMSServer_CheckServiceActivity_OutputMessage"/>
 		</wsdl:operation>
 		<wsdl:operation name="RealizarConsultaSQL">
-			<wsdl:input wsam:Action="https://totvsipaasqas.ype.ind.br/IwsConsultaSQL/RealizarConsultaSQL" message="tns:IwsConsultaSQL_RealizarConsultaSQL_InputMessage"/>
-			<wsdl:output wsam:Action="https://totvsipaasqas.ype.ind.br/IwsConsultaSQL/RealizarConsultaSQLResponse" message="tns:IwsConsultaSQL_RealizarConsultaSQL_OutputMessage"/>
+			<wsdl:input wsam:Action="http://www.totvs.com/IwsConsultaSQL/RealizarConsultaSQL" message="tns:IwsConsultaSQL_RealizarConsultaSQL_InputMessage"/>
+			<wsdl:output wsam:Action="http://www.totvs.com/IwsConsultaSQL/RealizarConsultaSQLResponse" message="tns:IwsConsultaSQL_RealizarConsultaSQL_OutputMessage"/>
 		</wsdl:operation>
 		<wsdl:operation name="RealizarConsultaSQLContexto">
-			<wsdl:input wsam:Action="https://totvsipaasqas.ype.ind.br/IwsConsultaSQL/RealizarConsultaSQLContexto" message="tns:IwsConsultaSQL_RealizarConsultaSQLContexto_InputMessage"/>
-			<wsdl:output wsam:Action="https://totvsipaasqas.ype.ind.br/IwsConsultaSQL/RealizarConsultaSQLContextoResponse" message="tns:IwsConsultaSQL_RealizarConsultaSQLContexto_OutputMessage"/>
+			<wsdl:input wsam:Action="http://www.totvs.com/IwsConsultaSQL/RealizarConsultaSQLContexto" message="tns:IwsConsultaSQL_RealizarConsultaSQLContexto_InputMessage"/>
+			<wsdl:output wsam:Action="http://www.totvs.com/IwsConsultaSQL/RealizarConsultaSQLContextoResponse" message="tns:IwsConsultaSQL_RealizarConsultaSQLContexto_OutputMessage"/>
 		</wsdl:operation>
 	</wsdl:portType>
 	<wsdl:binding name="RM_IRMSServer" type="tns:IRMSServer">
@@ -247,7 +247,7 @@
 			</wsdl:output>
 		</wsdl:operation>
 		<wsdl:operation name="RealizarConsultaSQL">
-			<soap:operation soapAction="https://totvsipaasqas.ype.ind.br/IwsConsultaSQL/RealizarConsultaSQL" style="document"/>
+			<soap:operation soapAction="http://www.totvs.com/IwsConsultaSQL/RealizarConsultaSQL" style="document"/>
 			<wsdl:input>
 				<soap:body use="literal"/>
 			</wsdl:input>
@@ -256,7 +256,7 @@
 			</wsdl:output>
 		</wsdl:operation>
 		<wsdl:operation name="RealizarConsultaSQLContexto">
-			<soap:operation soapAction="https://totvsipaasqas.ype.ind.br/IwsConsultaSQL/RealizarConsultaSQLContexto" style="document"/>
+			<soap:operation soapAction="http://www.totvs.com/IwsConsultaSQL/RealizarConsultaSQLContexto" style="document"/>
 			<wsdl:input>
 				<soap:body use="literal"/>
 			</wsdl:input>
