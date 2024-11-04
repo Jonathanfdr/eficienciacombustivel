@@ -77,10 +77,10 @@ This XML file does not appear to have any style information associated with it. 
 </wsp:Policy>
 <wsdl:types>
 <xsd:schema targetNamespace="http://www.totvs.com/Imports">
-<xsd:import schemaLocation="https://totvsipaasqas.ype.ind.br/wsConsultaSQL?xsd=xsd0" namespace="http://www.totvs.com/"/>
-<xsd:import schemaLocation="https://totvsipaasqas.ype.ind.br/wsConsultaSQL?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
-<xsd:import schemaLocation="https://totvsipaasqas.ype.ind.br/wsConsultaSQL?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/System"/>
-<xsd:import schemaLocation="https://totvsipaasqas.ype.ind.br/wsConsultaSQL?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Reflection"/>
+<xsd:import schemaLocation="https://totvsipaasqas.ype.ind.br/wsConsultaSQL/mex?xsd=xsd0" namespace="http://www.totvs.com/"/>
+<xsd:import schemaLocation="https://totvsipaasqas.ype.ind.br/wsConsultaSQL/mex?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+<xsd:import schemaLocation="https://totvsipaasqas.ype.ind.br/wsConsultaSQL/mex?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/System"/>
+<xsd:import schemaLocation="https://totvsipaasqas.ype.ind.br/wsConsultaSQL/mex?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Reflection"/>
 </xsd:schema>
 </wsdl:types>
 <wsdl:message name="IRMSServer_Implements_InputMessage">
