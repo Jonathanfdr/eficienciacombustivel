@@ -1,261 +1,279 @@
-<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://www.totvs.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" name="wsConsultaSQL" targetNamespace="http://www.totvs.com/">
-<wsp:Policy wsu:Id="RM_IRMSServer_policy">
-<wsp:ExactlyOne>
-<wsp:All>
-<sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-<wsp:Policy>
-<sp:TransportToken>
-<wsp:Policy>
-<sp:HttpsToken RequireClientCertificate="false"/>
-</wsp:Policy>
-</sp:TransportToken>
-<sp:AlgorithmSuite>
-<wsp:Policy>
-<sp:Basic256/>
-</wsp:Policy>
-</sp:AlgorithmSuite>
-<sp:Layout>
-<wsp:Policy>
-<sp:Strict/>
-</wsp:Policy>
-</sp:Layout>
-</wsp:Policy>
-</sp:TransportBinding>
-</wsp:All>
-</wsp:ExactlyOne>
-</wsp:Policy>
-<wsp:Policy wsu:Id="RM_IwsBase_policy">
-<wsp:ExactlyOne>
-<wsp:All>
-<sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-<wsp:Policy>
-<sp:TransportToken>
-<wsp:Policy>
-<sp:HttpsToken RequireClientCertificate="false"/>
-</wsp:Policy>
-</sp:TransportToken>
-<sp:AlgorithmSuite>
-<wsp:Policy>
-<sp:Basic256/>
-</wsp:Policy>
-</sp:AlgorithmSuite>
-<sp:Layout>
-<wsp:Policy>
-<sp:Strict/>
-</wsp:Policy>
-</sp:Layout>
-</wsp:Policy>
-</sp:TransportBinding>
-</wsp:All>
-</wsp:ExactlyOne>
-</wsp:Policy>
-<wsp:Policy wsu:Id="RM_IwsConsultaSQL_policy">
-<wsp:ExactlyOne>
-<wsp:All>
-<sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-<wsp:Policy>
-<sp:TransportToken>
-<wsp:Policy>
-<sp:HttpsToken RequireClientCertificate="false"/>
-</wsp:Policy>
-</sp:TransportToken>
-<sp:AlgorithmSuite>
-<wsp:Policy>
-<sp:Basic256/>
-</wsp:Policy>
-</sp:AlgorithmSuite>
-<sp:Layout>
-<wsp:Policy>
-<sp:Strict/>
-</wsp:Policy>
-</sp:Layout>
-</wsp:Policy>
-</sp:TransportBinding>
-</wsp:All>
-</wsp:ExactlyOne>
-</wsp:Policy>
-<wsdl:types>
-<xsd:schema targetNamespace="http://www.totvs.com/Imports">
-<xsd:import schemaLocation="https://totvsipaasqas.ype.ind.br/wsConsultaSQL/mex?xsd=xsd0" namespace="http://www.totvs.com/"/>
-<xsd:import schemaLocation="https://totvsipaasqas.ype.ind.br/wsConsultaSQL/mex?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
-<xsd:import schemaLocation="https://totvsipaasqas.ype.ind.br/wsConsultaSQL/mex?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/System"/>
-<xsd:import schemaLocation="https://totvsipaasqas.ype.ind.br/wsConsultaSQL/mex?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Reflection"/>
-</xsd:schema>
-</wsdl:types>
-<wsdl:message name="IRMSServer_Implements_InputMessage">
-<wsdl:part name="parameters" element="tns:Implements"/>
-</wsdl:message>
-<wsdl:message name="IRMSServer_Implements_OutputMessage">
-<wsdl:part name="parameters" element="tns:ImplementsResponse"/>
-</wsdl:message>
-<wsdl:message name="IRMSServer_CheckServiceActivity_InputMessage">
-<wsdl:part name="parameters" element="tns:CheckServiceActivity"/>
-</wsdl:message>
-<wsdl:message name="IRMSServer_CheckServiceActivity_OutputMessage">
-<wsdl:part name="parameters" element="tns:CheckServiceActivityResponse"/>
-</wsdl:message>
-<wsdl:message name="IwsBase_AutenticaAcesso_InputMessage">
-<wsdl:part name="parameters" element="tns:AutenticaAcesso"/>
-</wsdl:message>
-<wsdl:message name="IwsBase_AutenticaAcesso_OutputMessage">
-<wsdl:part name="parameters" element="tns:AutenticaAcessoResponse"/>
-</wsdl:message>
-<wsdl:message name="IwsConsultaSQL_RealizarConsultaSQL_InputMessage">
-<wsdl:part name="parameters" element="tns:RealizarConsultaSQL"/>
-</wsdl:message>
-<wsdl:message name="IwsConsultaSQL_RealizarConsultaSQL_OutputMessage">
-<wsdl:part name="parameters" element="tns:RealizarConsultaSQLResponse"/>
-</wsdl:message>
-<wsdl:message name="IwsConsultaSQL_RealizarConsultaSQLContexto_InputMessage">
-<wsdl:part name="parameters" element="tns:RealizarConsultaSQLContexto"/>
-</wsdl:message>
-<wsdl:message name="IwsConsultaSQL_RealizarConsultaSQLContexto_OutputMessage">
-<wsdl:part name="parameters" element="tns:RealizarConsultaSQLContextoResponse"/>
-</wsdl:message>
-<wsdl:portType name="IRMSServer">
-<wsdl:operation name="Implements">
-<wsdl:input wsam:Action="http://www.totvs.com/IRMSServer/Implements" message="tns:IRMSServer_Implements_InputMessage"/>
-<wsdl:output wsam:Action="http://www.totvs.com/IRMSServer/ImplementsResponse" message="tns:IRMSServer_Implements_OutputMessage"/>
-</wsdl:operation>
-<wsdl:operation name="CheckServiceActivity">
-<wsdl:input wsam:Action="http://www.totvs.com/IRMSServer/CheckServiceActivity" message="tns:IRMSServer_CheckServiceActivity_InputMessage"/>
-<wsdl:output wsam:Action="http://www.totvs.com/IRMSServer/CheckServiceActivityResponse" message="tns:IRMSServer_CheckServiceActivity_OutputMessage"/>
-</wsdl:operation>
-</wsdl:portType>
-<wsdl:portType name="IwsBase">
-<wsdl:operation name="Implements">
-<wsdl:input wsam:Action="http://www.totvs.com/IRMSServer/Implements" message="tns:IRMSServer_Implements_InputMessage"/>
-<wsdl:output wsam:Action="http://www.totvs.com/IRMSServer/ImplementsResponse" message="tns:IRMSServer_Implements_OutputMessage"/>
-</wsdl:operation>
-<wsdl:operation name="CheckServiceActivity">
-<wsdl:input wsam:Action="http://www.totvs.com/IRMSServer/CheckServiceActivity" message="tns:IRMSServer_CheckServiceActivity_InputMessage"/>
-<wsdl:output wsam:Action="http://www.totvs.com/IRMSServer/CheckServiceActivityResponse" message="tns:IRMSServer_CheckServiceActivity_OutputMessage"/>
-</wsdl:operation>
-<wsdl:operation name="AutenticaAcesso">
-<wsdl:input wsam:Action="http://www.totvs.com/IwsBase/AutenticaAcesso" message="tns:IwsBase_AutenticaAcesso_InputMessage"/>
-<wsdl:output wsam:Action="http://www.totvs.com/IwsBase/AutenticaAcessoResponse" message="tns:IwsBase_AutenticaAcesso_OutputMessage"/>
-</wsdl:operation>
-</wsdl:portType>
-<wsdl:portType name="IwsConsultaSQL">
-<wsdl:operation name="Implements">
-<wsdl:input wsam:Action="http://www.totvs.com/IRMSServer/Implements" message="tns:IRMSServer_Implements_InputMessage"/>
-<wsdl:output wsam:Action="http://www.totvs.com/IRMSServer/ImplementsResponse" message="tns:IRMSServer_Implements_OutputMessage"/>
-</wsdl:operation>
-<wsdl:operation name="CheckServiceActivity">
-<wsdl:input wsam:Action="http://www.totvs.com/IRMSServer/CheckServiceActivity" message="tns:IRMSServer_CheckServiceActivity_InputMessage"/>
-<wsdl:output wsam:Action="http://www.totvs.com/IRMSServer/CheckServiceActivityResponse" message="tns:IRMSServer_CheckServiceActivity_OutputMessage"/>
-</wsdl:operation>
-<wsdl:operation name="RealizarConsultaSQL">
-<wsdl:input wsam:Action="http://www.totvs.com/IwsConsultaSQL/RealizarConsultaSQL" message="tns:IwsConsultaSQL_RealizarConsultaSQL_InputMessage"/>
-<wsdl:output wsam:Action="http://www.totvs.com/IwsConsultaSQL/RealizarConsultaSQLResponse" message="tns:IwsConsultaSQL_RealizarConsultaSQL_OutputMessage"/>
-</wsdl:operation>
-<wsdl:operation name="RealizarConsultaSQLContexto">
-<wsdl:input wsam:Action="http://www.totvs.com/IwsConsultaSQL/RealizarConsultaSQLContexto" message="tns:IwsConsultaSQL_RealizarConsultaSQLContexto_InputMessage"/>
-<wsdl:output wsam:Action="http://www.totvs.com/IwsConsultaSQL/RealizarConsultaSQLContextoResponse" message="tns:IwsConsultaSQL_RealizarConsultaSQLContexto_OutputMessage"/>
-</wsdl:operation>
-</wsdl:portType>
-<wsdl:binding name="RM_IRMSServer" type="tns:IRMSServer">
-<wsp:PolicyReference URI="#RM_IRMSServer_policy"/>
-<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
-<wsdl:operation name="Implements">
-<soap:operation soapAction="http://www.totvs.com/IRMSServer/Implements" style="document"/>
-<wsdl:input>
-<soap:body use="literal"/>
-</wsdl:input>
-<wsdl:output>
-<soap:body use="literal"/>
-</wsdl:output>
-</wsdl:operation>
-<wsdl:operation name="CheckServiceActivity">
-<soap:operation soapAction="http://www.totvs.com/IRMSServer/CheckServiceActivity" style="document"/>
-<wsdl:input>
-<soap:body use="literal"/>
-</wsdl:input>
-<wsdl:output>
-<soap:body use="literal"/>
-</wsdl:output>
-</wsdl:operation>
-</wsdl:binding>
-<wsdl:binding name="RM_IwsBase" type="tns:IwsBase">
-<wsp:PolicyReference URI="#RM_IwsBase_policy"/>
-<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
-<wsdl:operation name="Implements">
-<soap:operation soapAction="http://www.totvs.com/IRMSServer/Implements" style="document"/>
-<wsdl:input>
-<soap:body use="literal"/>
-</wsdl:input>
-<wsdl:output>
-<soap:body use="literal"/>
-</wsdl:output>
-</wsdl:operation>
-<wsdl:operation name="CheckServiceActivity">
-<soap:operation soapAction="http://www.totvs.com/IRMSServer/CheckServiceActivity" style="document"/>
-<wsdl:input>
-<soap:body use="literal"/>
-</wsdl:input>
-<wsdl:output>
-<soap:body use="literal"/>
-</wsdl:output>
-</wsdl:operation>
-<wsdl:operation name="AutenticaAcesso">
-<soap:operation soapAction="http://www.totvs.com/IwsBase/AutenticaAcesso" style="document"/>
-<wsdl:input>
-<soap:body use="literal"/>
-</wsdl:input>
-<wsdl:output>
-<soap:body use="literal"/>
-</wsdl:output>
-</wsdl:operation>
-</wsdl:binding>
-<wsdl:binding name="RM_IwsConsultaSQL" type="tns:IwsConsultaSQL">
-<wsp:PolicyReference URI="#RM_IwsConsultaSQL_policy"/>
-<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
-<wsdl:operation name="Implements">
-<soap:operation soapAction="http://www.totvs.com/IRMSServer/Implements" style="document"/>
-<wsdl:input>
-<soap:body use="literal"/>
-</wsdl:input>
-<wsdl:output>
-<soap:body use="literal"/>
-</wsdl:output>
-</wsdl:operation>
-<wsdl:operation name="CheckServiceActivity">
-<soap:operation soapAction="http://www.totvs.com/IRMSServer/CheckServiceActivity" style="document"/>
-<wsdl:input>
-<soap:body use="literal"/>
-</wsdl:input>
-<wsdl:output>
-<soap:body use="literal"/>
-</wsdl:output>
-</wsdl:operation>
-<wsdl:operation name="RealizarConsultaSQL">
-<soap:operation soapAction="http://www.totvs.com/IwsConsultaSQL/RealizarConsultaSQL" style="document"/>
-<wsdl:input>
-<soap:body use="literal"/>
-</wsdl:input>
-<wsdl:output>
-<soap:body use="literal"/>
-</wsdl:output>
-</wsdl:operation>
-<wsdl:operation name="RealizarConsultaSQLContexto">
-<soap:operation soapAction="http://www.totvs.com/IwsConsultaSQL/RealizarConsultaSQLContexto" style="document"/>
-<wsdl:input>
-<soap:body use="literal"/>
-</wsdl:input>
-<wsdl:output>
-<soap:body use="literal"/>
-</wsdl:output>
-</wsdl:operation>
-</wsdl:binding>
-<wsdl:service name="wsConsultaSQL">
-<wsdl:port name="RM_IRMSServer" binding="tns:RM_IRMSServer">
-<soap:address location="https://totvsipaasqas.ype.ind.br/wsConsultaSQL/IRMSServer"/>
-</wsdl:port>
-<wsdl:port name="RM_IwsBase" binding="tns:RM_IwsBase">
-<soap:address location="https://totvsipaasqas.ype.ind.br/wsConsultaSQL/IwsBase"/>
-</wsdl:port>
-<wsdl:port name="RM_IwsConsultaSQL" binding="tns:RM_IwsConsultaSQL">
-<soap:address location="https://totvsipaasqas.ype.ind.br/wsConsultaSQL/IwsConsultaSQL"/>
-</wsdl:port>
-</wsdl:service>
+<wsdl:definitions
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex"
+	xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+	xmlns:wsa10="http://www.w3.org/2005/08/addressing"
+	xmlns:wsp="http://www.w3.org/ns/ws-policy"
+	xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy"
+	xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract"
+	xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"
+	xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing"
+	xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://www.totvs.com/"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl"
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" name="wsConsultaSQL" targetNamespace="http://www.totvs.com/">
+	<wsp:Policy wsu:Id="RM_IRMSServer_policy">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<sp:TransportBinding
+					xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+					<wsp:Policy>
+						<sp:TransportToken>
+							<wsp:Policy>
+								<sp:HttpsToken RequireClientCertificate="false"/>
+							</wsp:Policy>
+						</sp:TransportToken>
+						<sp:AlgorithmSuite>
+							<wsp:Policy>
+								<sp:Basic256/>
+							</wsp:Policy>
+						</sp:AlgorithmSuite>
+						<sp:Layout>
+							<wsp:Policy>
+								<sp:Strict/>
+							</wsp:Policy>
+						</sp:Layout>
+					</wsp:Policy>
+				</sp:TransportBinding>
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+	<wsp:Policy wsu:Id="RM_IwsBase_policy">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<sp:TransportBinding
+					xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+					<wsp:Policy>
+						<sp:TransportToken>
+							<wsp:Policy>
+								<sp:HttpsToken RequireClientCertificate="false"/>
+							</wsp:Policy>
+						</sp:TransportToken>
+						<sp:AlgorithmSuite>
+							<wsp:Policy>
+								<sp:Basic256/>
+							</wsp:Policy>
+						</sp:AlgorithmSuite>
+						<sp:Layout>
+							<wsp:Policy>
+								<sp:Strict/>
+							</wsp:Policy>
+						</sp:Layout>
+					</wsp:Policy>
+				</sp:TransportBinding>
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+	<wsp:Policy wsu:Id="RM_IwsConsultaSQL_policy">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<sp:TransportBinding
+					xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+					<wsp:Policy>
+						<sp:TransportToken>
+							<wsp:Policy>
+								<sp:HttpsToken RequireClientCertificate="false"/>
+							</wsp:Policy>
+						</sp:TransportToken>
+						<sp:AlgorithmSuite>
+							<wsp:Policy>
+								<sp:Basic256/>
+							</wsp:Policy>
+						</sp:AlgorithmSuite>
+						<sp:Layout>
+							<wsp:Policy>
+								<sp:Strict/>
+							</wsp:Policy>
+						</sp:Layout>
+					</wsp:Policy>
+				</sp:TransportBinding>
+			</wsp:All>
+		</wsp:ExactlyOne>
+	</wsp:Policy>
+	<wsdl:types>
+		<xsd:schema targetNamespace="http://www.totvs.com/Imports">
+			<xsd:import schemaLocation="https://totvsipaasqas.ype.ind.br/wsConsultaSQL/mex?xsd=xsd0" namespace="http://www.totvs.com/"/>
+			<xsd:import schemaLocation="https://totvsipaasqas.ype.ind.br/wsConsultaSQL/mex?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/"/>
+			<xsd:import schemaLocation="https://totvsipaasqas.ype.ind.br/wsConsultaSQL/mex?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/System"/>
+			<xsd:import schemaLocation="https://totvsipaasqas.ype.ind.br/wsConsultaSQL/mex?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Reflection"/>
+		</xsd:schema>
+	</wsdl:types>
+	<wsdl:message name="IRMSServer_Implements_InputMessage">
+		<wsdl:part name="parameters" element="tns:Implements"/>
+	</wsdl:message>
+	<wsdl:message name="IRMSServer_Implements_OutputMessage">
+		<wsdl:part name="parameters" element="tns:ImplementsResponse"/>
+	</wsdl:message>
+	<wsdl:message name="IRMSServer_CheckServiceActivity_InputMessage">
+		<wsdl:part name="parameters" element="tns:CheckServiceActivity"/>
+	</wsdl:message>
+	<wsdl:message name="IRMSServer_CheckServiceActivity_OutputMessage">
+		<wsdl:part name="parameters" element="tns:CheckServiceActivityResponse"/>
+	</wsdl:message>
+	<wsdl:message name="IwsBase_AutenticaAcesso_InputMessage">
+		<wsdl:part name="parameters" element="tns:AutenticaAcesso"/>
+	</wsdl:message>
+	<wsdl:message name="IwsBase_AutenticaAcesso_OutputMessage">
+		<wsdl:part name="parameters" element="tns:AutenticaAcessoResponse"/>
+	</wsdl:message>
+	<wsdl:message name="IwsConsultaSQL_RealizarConsultaSQL_InputMessage">
+		<wsdl:part name="parameters" element="tns:RealizarConsultaSQL"/>
+	</wsdl:message>
+	<wsdl:message name="IwsConsultaSQL_RealizarConsultaSQL_OutputMessage">
+		<wsdl:part name="parameters" element="tns:RealizarConsultaSQLResponse"/>
+	</wsdl:message>
+	<wsdl:message name="IwsConsultaSQL_RealizarConsultaSQLContexto_InputMessage">
+		<wsdl:part name="parameters" element="tns:RealizarConsultaSQLContexto"/>
+	</wsdl:message>
+	<wsdl:message name="IwsConsultaSQL_RealizarConsultaSQLContexto_OutputMessage">
+		<wsdl:part name="parameters" element="tns:RealizarConsultaSQLContextoResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="IRMSServer">
+		<wsdl:operation name="Implements">
+			<wsdl:input wsam:Action="http://www.totvs.com/IRMSServer/Implements" message="tns:IRMSServer_Implements_InputMessage"/>
+			<wsdl:output wsam:Action="http://www.totvs.com/IRMSServer/ImplementsResponse" message="tns:IRMSServer_Implements_OutputMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="CheckServiceActivity">
+			<wsdl:input wsam:Action="http://www.totvs.com/IRMSServer/CheckServiceActivity" message="tns:IRMSServer_CheckServiceActivity_InputMessage"/>
+			<wsdl:output wsam:Action="http://www.totvs.com/IRMSServer/CheckServiceActivityResponse" message="tns:IRMSServer_CheckServiceActivity_OutputMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:portType name="IwsBase">
+		<wsdl:operation name="Implements">
+			<wsdl:input wsam:Action="http://www.totvs.com/IRMSServer/Implements" message="tns:IRMSServer_Implements_InputMessage"/>
+			<wsdl:output wsam:Action="http://www.totvs.com/IRMSServer/ImplementsResponse" message="tns:IRMSServer_Implements_OutputMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="CheckServiceActivity">
+			<wsdl:input wsam:Action="http://www.totvs.com/IRMSServer/CheckServiceActivity" message="tns:IRMSServer_CheckServiceActivity_InputMessage"/>
+			<wsdl:output wsam:Action="http://www.totvs.com/IRMSServer/CheckServiceActivityResponse" message="tns:IRMSServer_CheckServiceActivity_OutputMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="AutenticaAcesso">
+			<wsdl:input wsam:Action="http://www.totvs.com/IwsBase/AutenticaAcesso" message="tns:IwsBase_AutenticaAcesso_InputMessage"/>
+			<wsdl:output wsam:Action="http://www.totvs.com/IwsBase/AutenticaAcessoResponse" message="tns:IwsBase_AutenticaAcesso_OutputMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:portType name="IwsConsultaSQL">
+		<wsdl:operation name="Implements">
+			<wsdl:input wsam:Action="http://www.totvs.com/IRMSServer/Implements" message="tns:IRMSServer_Implements_InputMessage"/>
+			<wsdl:output wsam:Action="http://www.totvs.com/IRMSServer/ImplementsResponse" message="tns:IRMSServer_Implements_OutputMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="CheckServiceActivity">
+			<wsdl:input wsam:Action="http://www.totvs.com/IRMSServer/CheckServiceActivity" message="tns:IRMSServer_CheckServiceActivity_InputMessage"/>
+			<wsdl:output wsam:Action="http://www.totvs.com/IRMSServer/CheckServiceActivityResponse" message="tns:IRMSServer_CheckServiceActivity_OutputMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="RealizarConsultaSQL">
+			<wsdl:input wsam:Action="http://www.totvs.com/IwsConsultaSQL/RealizarConsultaSQL" message="tns:IwsConsultaSQL_RealizarConsultaSQL_InputMessage"/>
+			<wsdl:output wsam:Action="http://www.totvs.com/IwsConsultaSQL/RealizarConsultaSQLResponse" message="tns:IwsConsultaSQL_RealizarConsultaSQL_OutputMessage"/>
+		</wsdl:operation>
+		<wsdl:operation name="RealizarConsultaSQLContexto">
+			<wsdl:input wsam:Action="http://www.totvs.com/IwsConsultaSQL/RealizarConsultaSQLContexto" message="tns:IwsConsultaSQL_RealizarConsultaSQLContexto_InputMessage"/>
+			<wsdl:output wsam:Action="http://www.totvs.com/IwsConsultaSQL/RealizarConsultaSQLContextoResponse" message="tns:IwsConsultaSQL_RealizarConsultaSQLContexto_OutputMessage"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="RM_IRMSServer" type="tns:IRMSServer">
+		<wsp:PolicyReference URI="#RM_IRMSServer_policy"/>
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="Implements">
+			<soap:operation soapAction="http://www.totvs.com/IRMSServer/Implements" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CheckServiceActivity">
+			<soap:operation soapAction="http://www.totvs.com/IRMSServer/CheckServiceActivity" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="RM_IwsBase" type="tns:IwsBase">
+		<wsp:PolicyReference URI="#RM_IwsBase_policy"/>
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="Implements">
+			<soap:operation soapAction="http://www.totvs.com/IRMSServer/Implements" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CheckServiceActivity">
+			<soap:operation soapAction="http://www.totvs.com/IRMSServer/CheckServiceActivity" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="AutenticaAcesso">
+			<soap:operation soapAction="http://www.totvs.com/IwsBase/AutenticaAcesso" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:binding name="RM_IwsConsultaSQL" type="tns:IwsConsultaSQL">
+		<wsp:PolicyReference URI="#RM_IwsConsultaSQL_policy"/>
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="Implements">
+			<soap:operation soapAction="http://www.totvs.com/IRMSServer/Implements" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="CheckServiceActivity">
+			<soap:operation soapAction="http://www.totvs.com/IRMSServer/CheckServiceActivity" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="RealizarConsultaSQL">
+			<soap:operation soapAction="http://www.totvs.com/IwsConsultaSQL/RealizarConsultaSQL" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="RealizarConsultaSQLContexto">
+			<soap:operation soapAction="http://www.totvs.com/IwsConsultaSQL/RealizarConsultaSQLContexto" style="document"/>
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="wsConsultaSQL">
+		<wsdl:port name="RM_IRMSServer" binding="tns:RM_IRMSServer">
+			<soap:address location="https://totvsipaasqas.ype.ind.br/wsConsultaSQL/IRMSServer"/>
+		</wsdl:port>
+		<wsdl:port name="RM_IwsBase" binding="tns:RM_IwsBase">
+			<soap:address location="https://totvsipaasqas.ype.ind.br/wsConsultaSQL/IwsBase"/>
+		</wsdl:port>
+		<wsdl:port name="RM_IwsConsultaSQL" binding="tns:RM_IwsConsultaSQL">
+			<soap:address location="https://totvsipaasqas.ype.ind.br/wsConsultaSQL/IwsConsultaSQL"/>
+		</wsdl:port>
+	</wsdl:service>
 </wsdl:definitions>
