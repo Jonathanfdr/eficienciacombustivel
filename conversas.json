@@ -1,0 +1,3479 @@
+openapi: 3.0.0
+
+info:
+  title: RD Station Conversas
+  version: 2.0.1
+  x-logo:
+    url: '/megasac-api/v2/logo'
+    altText: Logo do RD Station Conversas
+  # contact:
+  #   name: Site oficial e de suporte
+  #   email: suporte@tallos.com.br
+  #   url: http://www.tallos.com.br
+  description: |
+    Todas as API's do RD Station Conversas foram desenvolvidas com o padrão REST, seguindo as
+    práticas de mercado para que a experiência de integração seja o mais descomplicada possível.
+    As URLs são orientadas a recursos e semânticamente definidas para que os termos de negócios
+    sejam facilmente compreendidos e assimilados por pessoas desenvolvedoras que não tenham
+    conhecimento prévio sobre o sistema.
+
+    > <i class="info">icon</i>
+    > Todas as respostas HTTP são providas no formato JSON. As requisições que requerem dados em seu
+    > corpo tamvém usam JSON, exceto as que permitem algum tipo de upload de arquivo.
+
+    > <i class="whatsapp">icon</i>
+    > Todos os recursos disponíveis nesta API são para mensagens de **WhatsApp** apenas.
+
+
+    # Autenticação
+
+    Para se conectar aos recursos do RD Station Conversas, a API segue a especificação [OAuth 2.0
+    (RFC 6750)](https://datatracker.ietf.org/doc/html/rfc6750) para autenticação. Portanto, é
+    necessario que as requisições contenham o cabeçalho HTTP `Authorization: Bearer <token>`, onde
+    `<token>` corresponde ao JWT da sua conta de cliente do RD Station Conversas.
+
+
+    # Criptografia
+
+    > <i class="info">icon</i>
+    > Recurso disponível apenas para contas **Profissionais** do RD Station Conversas.
+
+    > <i class="info">icon</i>
+    > Apenas alguns endpoints bem específicos requerem criptografia.
+
+    Alguns recursos de API requerem uma camada adicional de proteção para tráfego dos dados a fim de
+    garantir confidencialidade e conformidade a exigências legais (e.g. LGPD) e boas práticas de
+    desenvolvimento de sistemas.
+
+    Para tanto, é necessário gerar uma **chave secreta única**, que permitirá criptografar e
+    descriptografar dados de maneira eficiente e segura através da API.
+    - Certifique-se que sua companhia detêm uma conta **Profissional**
+    - Ao entrar no RD Station Conversas, abra o menu _Canais_ e, em seguida, clique na opção
+      [_Configurar Canais_](https://app.tallos.com.br/app/integrations/channels)
+    - Na página que abrir, clique em _Gerar Chave_ para criar uma chave pública e privada
+    - Com as chaves em mãos, você poderá utilizar o pacote [`node-jose`](https://www.npmjs.com/package/node-jose#node-jose)
+      para importá-las e criptografar/descriptografar dados transportados pela API
+
+    > <i class="warn">icon</i>
+    > Cada chave é exclusiva para cada conta e não deve ser compartilhada. Armazene-a em um local
+    > seguro.
+
+    Exemplo de chaves pública/privada geradas:
+
+    ```json
+    {
+      "kty": "RSA",
+      "kid": "Y2B0HtjgG_oPW-BTPdtiok4U0IWLIpSs2XN1YtaU-7A",
+      "use": "enc",
+      "alg": "RSA-OAEP-256",
+      "e": "AQAB",
+      "n": "0E4-JdrGPOS5nIM1X68u4xSQDu2FgQAbxnPAl7OZht2PyW_trsrgBPzJWDxbdUtYQIKJHRNo2AGu_VFKicbRKtypaBg7HQ9aY41g8pX1Z1Ze-8PSyy-CwhrwNnXCwckVjknn2-Pfd3C3h0YjQS87b2VfeJFIpiS6CtCrCFOue00MoBoJg1872jITqGcIUNgfI90N_Zclp0qFhvqYTsgn__V5QZOYhYLnpqipemU-GgGVZPEDv2chBDHcTUZyS4WGW3s0F2Huon6U2mrKL5ElQC3ACD6zEYhDUnhw4rJ1waCw_FIopEeHbsO6e22L3hPSzrq3iUCVcAhRcJV9tG8bFQ",
+      "d": "KwONJ8n2V4qvnVcmxVxqZS_Q05ROliXMln0-jtTiZgwIbgMz5H02JzF_7j2AcUcesSuDXsKsSraGSP7pUmwAs0YfoUQnqMeL1bTTCSTYKP-X24tDUvu7l5NyePx2PAfm8JvoSerTMVnQPBnKm-JB9q3LOh1eEBjTZfpS5wRIqmMOPqfk7_W_YA2yGw7X-YHi0AhwHUxcJxQNiws4e7HPzEhdpFS0-80-OoDyFDNcqYjeofF3upqFg_Cpn2OdIo3dO_N_DCL7dxTl2uvjIeHxSGtIsOIQw-IwyApPw5jTbNTJ3c4cBmHiWO09XjXYVcuoKBhGQZs3bI-27PT1qfNdnQ",
+      "p": "8Gu_Qs9PO2U0iMlgGV-qMxU-IVEKHxMKTqIZV1oF5q-fTbw9EmDZG41Y4rPJ71bOF5G3vBTEPiefY10rLZskDzkkCrj4xECSytvT2w079wmoRgTCPEb0ZQaaVg3-i-IPZsS5w4VKL8us2SL3uOYx35q6jj_KiTfVIzGsOii1Q9c",
+      "q": "3c2_ZuSXAQwTsOEqZs-MT3wk1UxGU0wKtMhz2S445DkMCWt0DAuJno1cx7gITvQg7lhlRHy4fKB9QZFUStVwR_puaQfPOpLyQn9Xd63q9cI17gH_El0IHjFTX46a7JW7RZcbNRUKiEthXmU-cczFhOKwO0KV3XYrIb99hXjnOvM",
+      "dp": "Yj3lHcvQuJiWav6-wh-RUOZxSPPwitog8BjU-hjTKHzDP-SXoBbrIJMVqy2EasSx2ne0-KoTtsJCIzxDFJO8nGvhCnCjVq58TWCepXg29K-Bj3sKU886tr2H-3okdcyeNoRU1Ex3ECjOLLxZNbj60EBN0yrF_GRQN91oXyubRmk",
+      "dq": "c4evopB-dvUrbH5b76E7nEs1hERufQSmrvOaJA2HZJiyRFXL5Fo-HG_VW9Hnwfg3Du7MEJhGH-QYWgawuSnjihpPWDXRItlXhnt9u8DDGa9HF-nCSnZavB9FJgjJeWGkYeMLMOL80XEyDlD97ZiTaVwKH1PXa7sZTELJxrPq_TE",
+      "qi": "uc0Plt_DEpdXUe-thNiok3JPl5oeCaiQJkUTYoKcyWIygRBEkzdZFm9PyJOMOMlV29eO85WmZiSXDFC8-qQ3uZs9hGb21rpRaZY3Qhhbv1TzuH_AxVvuH_s0iAoUTpK-TDAe3mAkvnjvATI_Dk_s-pBJV7gx1e_FdBbk4wCRlt0"
+    }
+    ```
+
+    Exemplo de código em JavaScript para fazer a importação da chave, criptografar e descriptografar dados usando o
+    pacote `node-jose`:
+
+    ```js
+    const jose = require('node-jose');
+
+    const payload = 'dados sensíveis aqui';
+
+    const publicPrivateKey = {
+      kty: 'RSA',
+      kid: 'Y2B0HtjgG_oPW-BTPdtiok4U0IWLIpSs2XN1YtaU-7A',
+      use: 'enc',
+      alg: 'RSA-OAEP-256',
+      e: 'AQAB',
+      n: '0E4-JdrGPOS5nIM1X68u4xSQDu2FgQAbxnPAl7OZht2PyW_trsrgBPzJWDxbdUtYQIKJHRNo2AGu_VFKicbRKtypaBg7HQ9aY41g8pX1Z1Ze-8PSyy-CwhrwNnXCwckVjknn2-Pfd3C3h0YjQS87b2VfeJFIpiS6CtCrCFOue00MoBoJg1872jITqGcIUNgfI90N_Zclp0qFhvqYTsgn__V5QZOYhYLnpqipemU-GgGVZPEDv2chBDHcTUZyS4WGW3s0F2Huon6U2mrKL5ElQC3ACD6zEYhDUnhw4rJ1waCw_FIopEeHbsO6e22L3hPSzrq3iUCVcAhRcJV9tG8bFQ',
+      d: 'KwONJ8n2V4qvnVcmxVxqZS_Q05ROliXMln0-jtTiZgwIbgMz5H02JzF_7j2AcUcesSuDXsKsSraGSP7pUmwAs0YfoUQnqMeL1bTTCSTzEhdpFS0-80-OoDyFDNcqYjeofF3upqFg_Cpn2OdIo3dO_N_DCL7dxTl2uvjIeHxSGtIsOIQw-IwyApPw5jTbNTJ3c4cBmHiWO09XjXYVcuoKBhGQZs3bI-27PT1qfNdnQ',
+      p: '8Gu_Qs9PO2U0iMlgGV-qMxU-IVEKHxMKTqIZV1oF5q-fTbw9EmDZG41Y4rPJ71bOF5G3vBTEPiefY10rLZskDzkkCrj4xECSytvT2w079wmoRgTCPEb0ZQaaVg3-i-IPZsS5w4VKL8us2SL3uOYx35q6jj_KiTfVIzGsOii1Q9c',
+      q: '3c2_ZuSXAQwTsOEqZs-MT3wk1UxGU0wKtMhz2S445DkMCWt0DAuJno1cx7gITvQg7lhlRHy4fKB9QZFUStVwR_puaQfPOpLyQn9Xd63q9cI17gH_El0IHjFTX46a7JW7RZcbNRUKiEthXmU-cczFhOKwO0KV3XYrIb99hXjnOvM',
+      dp: 'Yj3lHcvQuJiWav6-wh-RUOZxSPPwitog8BjU-hjTKHzDP-SXoBbrIJMVqy2EasSx2ne0-KoTtsJCIzxDFJO8nGvhCnCjVq58TWCepXg29K-Bj3sKU886tr2H-3okdcyeNoRU1Ex3ECjOLLxZNbj60EBN0yrF_GRQN91oXyubRmk',
+      dq: 'c4evopB-dvUrbH5b76E7nEs1hERufQSmrvOaJA2HZJiyRFXL5Fo-HG_VW9Hnwfg3Du7MEJhGH-QYWgawuSnjihpPWDXRItlXhnt9u8DDGa9HF-nCSnZavB9FJgjJeWGkYeMLMOL80XEyDlD97ZiTaVwKH1PXa7sZTELJxrPq_TE',
+      qi: 'uc0Plt_DEpdXUe-thNiok3JPl5oeCaiQJkUTYoKcyWIygRBEkzdZFm9PyJOMOMlV29eO85WmZiSXDFC8-qQ3uZs9hGb21rpRaZY3Qhhbv1TzuH_AxVvuH_s0iAoUTpK-TDAe3mAkvnjvATI_Dk_s-pBJV7gx1e_FdBbk4wCRlt0',
+    };
+
+    const jwkKey = await jose.JWK.asKey(jwkKey, 'json');
+    const encryptedPayload = await encrypt(jwkKey, payload);
+    const decryptedPayload = await decrypt(importedKey, encryptedPayload);
+
+    async function encrypt(key, payload) {
+      const jsonPayload = JSON.stringify(payload);
+      const jwe = await jose.JWE
+        .createEncrypt({ format: 'compact' }, key)
+        .update(jsonPayload)
+        .final();
+
+      return jwe;
+    }
+
+    async function decrypt(key, encryptedPayload) {
+      const result = await jose.JWE
+        .createDecrypt(key)
+        .decrypt(encryptedPayload);
+      const stringResult = result.plaintext.toString();
+      const payload = JSON.parse(stringResult);
+
+      return payload;
+    }
+    ```
+
+
+    # CORS
+
+    Esta API tem o Cross-Origin Resource Sharing (CORS) implementado de acordo com as especificações
+    da W3C, permitindo a comunicação entre domínios do navegador. Todas as respostas têm um coringa
+    de mesma origem, tornando-as públicas e acessíveis de qualquer domínio ou aplicação online.
+
+
+    # Avisos importantes
+
+    **Atenção: Não oferecemos serviço de consultoria e análise de código em nosso suporte.**
+
+servers:
+  - url: https://api.megasac.tallos.com.br/
+    description: Tallos API
+  - url:  https://api.tallos.com.br/
+    description: TALLOS API
+
+security:
+  - JWT: []
+
+tags:
+  - name: contacts
+  - name: customers
+  - name: employees
+  - name: flows
+  - name: messages
+  - name: reports
+  - name: templates
+  - name: wallets
+  - name: whatsapp
+  - name: workflows
+  - name: contact_model
+    x-displayName: Contact Model
+    description: <SchemaDefinition schemaRef="#/components/schemas/Contact" />
+  - name: customer_model
+    x-displayName: Customer Model
+    description: <SchemaDefinition schemaRef="#/components/schemas/Customer" />
+  - name: employee_model
+    x-displayName: Employee Model
+    description: <SchemaDefinition schemaRef="#/components/schemas/Employee" />
+  - name: flow_model
+    x-displayName: Flow Model
+    description: <SchemaDefinition schemaRef="#/components/schemas/Flow" />
+  - name: message_model
+    x-displayName: Message Model
+    description: <SchemaDefinition schemaRef="#/components/schemas/Message" />
+  - name: workflow_model
+    x-displayName: Workflow Model
+    description: <SchemaDefinition schemaRef="#/components/schemas/Workflow" />
+
+x-tagGroups:
+  - name: Clientes
+    tags:
+      - customers
+  - name: Mensagens
+    tags:
+      - messages
+  - name: Funcionários
+    tags:
+      - employees
+  - name: Contatos
+    tags:
+      - contacts
+  - name: Carteiras
+    tags:
+      - wallets
+  - name: Flows
+    tags:
+      - flows
+  - name: Workflows
+    tags:
+      - workflows
+  - name: WhatsApp
+    tags:
+      - whatsapp
+  - name: Templates
+    tags:
+      - templates
+  - name: Relatórios
+    tags:
+      - reports
+  - name: Models
+    tags:
+      - contact_model
+      - customer_model
+      - employee_model
+      - flow_model
+      - message_model
+      - wallet_model
+      - workflow_model
+
+paths:
+  /v2/customers:
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+
+    get:
+      operationId: getCustomers
+      tags:
+        - customers
+      summary: Listar Clientes
+      description: |
+        Retornar uma lista páginada de clientes.
+
+      parameters:
+        - $ref: '#/components/parameters/QueryPage'
+        - $ref: '#/components/parameters/QueryLimit'
+        - in: query
+          name: channels
+          description: |
+            Filtro de canais a serem retornados na lista (Separados por `,`).
+          schema:
+            type: string
+            enum:
+              - 'telegram'
+              - 'whatsapp'
+
+      responses:
+        200:
+          description: Success
+          headers:
+            X-Limit:
+              description: Número de itens retornados na página atual.
+              schema:
+                type: integer
+                format: int32
+            X-Total:
+              description: Total de itens na lista.
+              schema:
+                type: integer
+                format: int32
+            X-Page:
+              description: Número da página atual.
+              schema:
+                type: integer
+                format: int32
+            X-Pages:
+              description: Número total de páginas com o limite selecionado.
+              schema:
+                type: integer
+                format: int32
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Customer'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X GET https://api.megasac.tallos.com.br/v2/customers \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json'
+        - lang: JS
+          source: |
+            await fetch('https://api.megasac.tallos.com.br/v2/customers', {
+              method: 'GET',
+              headers: {
+                'Authorization': 'Bearer afa924210118b9fd364a4da84d3fcdf7',
+                'Content-Type': 'application/json',
+              },
+            }).then(response => response.json());
+
+  /v2/customers/wallets/remove-all:
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+
+    post:
+      operationId: removeAllCustomersFromWallet
+      tags:
+        - customers
+      summary: Remover Clientes de Carteira
+      description: |
+        Remover todos os clientes vinculados a uma determinada carteira.
+
+      requestBody:
+        description: Objeto com o nome da carteira.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - wallet_name
+              properties:
+                wallet_name:
+                  description: Nome da carteira.
+                  type: string
+                  example: 'Carteira Exemplo'
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - type: object
+                    properties:
+                      quantityModified: # FIXME: usar snake_case
+                        description: Quantidade de registros alterados.
+                        type: integer
+                        example: 6
+                  - type: object
+                    properties:
+                      message:
+                        description: Mensagem detalhada.
+                        type: string
+                        example: 'No changes were made to the customer wallet.'
+                      result:
+                        description: Detalhamento de itens atualizados.
+                        type: object
+                        properties:
+                          nModified: # FIXME: usar snake_case
+                            description: Quantidade de registros alterados
+                            type: integer
+                            example: 0
+                          operationTime: # FIXME: usar snake_case
+                            description: Tempo do processamento em milisegundos.
+                            type: string
+                            example: '7457703336427388929'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |-
+            curl -X POST https://api.megasac.tallos.com.br/v2/customers/wallets/remove-all \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json' \
+              -d '{
+                "wallet_name": "Carteira Exemplo"
+              }'
+        - lang: JS
+          source: |
+            await fetch('https://api.megasac.tallos.com.br/v2/customers/wallets/remove-all', {
+              method: 'POST',
+              headers: {
+                'Authorization': 'Bearer afa924210118b9fd364a4da84d3fcdf7',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                wallet_name: 'Carteira Exemplo',
+              }),
+            }).then(response => response.json());
+
+  /v2/messages/{customerId}/send:
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+      - in: path
+        name: customerId
+        description: |
+          ID do cliente que receberá a mensagem.
+        required: true
+        schema:
+          type: string
+          format: hash
+
+    post:
+      operationId: sendMessage
+      tags:
+        - messages
+      summary: Enviar mensagem
+      description: |
+        Enviar mensagem.
+
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - sent_by
+                - message
+              properties:
+                sent_by:
+                  description: |
+                    Quem está enviando a mensagem.
+                  type: string
+                  enum:
+                    - operator
+                    - bot
+                  example: 'bot'
+                operator:
+                  description: |
+                    Qual operador está enviando a mensagem.
+                  type: string
+                  example: ''
+                message:
+                  description: |
+                    Mensagem a ser enviada ao cliente (Obrigatório somente se a mensagem enviada for
+                    for de texto).
+                  type: string
+                  example: 'Minha mensagem'
+                integration:
+                  description: |
+                    Chip de integração de qual será envianda a mensagem.
+                  type: string
+                  example: 'integration-1'
+                attach:
+                  description: |
+                    Arquivo a ser enviado ao cliente (É obrigatório o envio do mesmo com o nome de
+                    attach).
+
+                    Tipos de arquivos aceitos:
+                    - **Imagem - Convertidos para um PNG estático:** jpg, jpeg, png, bmp, ico, gif, svg
+                    - **Áudio - Convertidos para MP3:** mp3, wav, ogg, opus
+                    - **Documento:** pdf
+                    - **Office:** doc, docx, xls, xlsx, ppt, pptx
+                    - **Texto:** txt, csv
+                    - **Arquivos compactados:** zip, rar
+                  type: string
+                  format: binary
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    description: Mensagem enviada com sucesso.
+                    type: string
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        422:
+          $ref: '#/components/responses/UnprocessableEntityError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X POST https://api.megasac.tallos.com.br/v2/messages/abc123/send \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/x-www-form-urlencoded' \
+              -d '{
+                "message" : "Sua mensagem",
+                "sent_by" : "operator",
+                "operator" : "employee_id"
+              }'
+        - lang: CURL
+          source: |
+            curl -X POST https://api.megasac.tallos.com.br/v2/v2/messages/abc123/send \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/x-www-form-urlencoded' \
+              -d '{
+                "message" : "Sua mensagem",
+                "sent_by" : "bot"
+              }'
+        - lang: CURL
+          source: |
+            curl -X POST https://api.megasac.tallos.com.br/v2/messages/abc123/send \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/x-www-form-urlencoded' \
+              -d '{
+                "message" : "Sua mensagem",
+                "sent_by" : "operator",
+                "operator" : "employee_id",
+                "integration" : "integration-1"
+              }'
+
+  /v2/messages/{customerId}/send-template-filled:
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+      - in: path
+        name: customerId
+        description: |
+          ID do cliente que receberá a mensagem.
+        required: true
+        schema:
+          type: string
+          format: hash
+
+    post:
+      operationId: sendTempleteMessageFilled
+      tags:
+        - messages
+      summary: Enviar mensagem de template preenchida
+      description: |
+        Enviar mensagem de template com as variáveis já substituidas.
+
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - sent_by
+                - message
+                - template_message
+              properties:
+                sent_by:
+                  description: |
+                    Quem está enviando a mensagem.
+                  type: string
+                  enum:
+                    - operator
+                    - bot
+                  example: 'bot'
+                operator:
+                  description: |
+                    Qual operador está enviando a mensagem.
+                  type: string
+                  example: ''
+                message:
+                  description: |
+                    Mensagem a ser enviada ao cliente (Com as variáveis já alteradas pelos valores).
+                  type: string
+                  example: 'Olá, sou o João, seja bem vindo!'
+                template_message:
+                  description: |
+                    Mensagem de template original usada para comparação com as variáveis.
+                  type: string
+                  example: 'Olá, sou o @OPERADOR, seja bem vindo!'
+                integration:
+                  description: |
+                    Chip de integração do qual será envianda a mensagem.
+                  type: string
+                  example: 'integration-1'
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    description: Mensagem enviada com sucesso
+                    type: string
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        422:
+          $ref: '#/components/responses/UnprocessableEntityError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X POST https://api.megasac.tallos.com.br/v2/messages/:customer_id/send-template-filled \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/x-www-form-urlencoded' \
+              -d '{
+                "message" : "Olá, sou o João, seja bem vindo!",
+                "template_message" : "Olá, sou o @OPERADOR, seja bem vindo!",
+                "sent_by" : "operator",
+                "operator" : "employee_id"
+              }'
+        - lang: CURL
+          source: |
+            curl -X POST https://api.megasac.tallos.com.br/v2/v2/messages/abc123/send-template-filled \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/x-www-form-urlencoded' \
+              -d '{
+                "message" : "Olá, sou o João, seja bem vindo!",
+                "template_message" : "Olá, sou o @OPERADOR, seja bem vindo!",
+                "sent_by" : "bot"
+              }'
+        - lang: CURL
+          source: |
+            curl -X POST https://api.megasac.tallos.com.br/v2/messages/abc123/send-template-filled \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/x-www-form-urlencoded' \
+              -d '{
+                "message" : "Olá, sou o João, seja bem vindo!",
+                "template_message" : "Olá, sou o @OPERADOR, seja bem vindo!",
+                "sent_by" : "operator",
+                "operator" : "employee_id",
+                "integration" : "integration-1"
+              }'
+
+  /v2/messages/{customerId}/send-template-filled-by-brokers:
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+      - in: path
+        name: customerId
+        description: ID do cliente que receberá a mensagem.
+        required: true
+        schema:
+          type: string
+          format: hash
+
+    post:
+      operationId: sendTemplateMessageFilledByBrockers
+      tags:
+        - messages
+      summary: Enviar mensagem de template preenchida pela Dialog ou Gupshup
+      description: |
+        Enviar mensagem de template com as variáveis já substituidas.
+
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - sent_by
+                - template_message_id
+                - variables
+              properties:
+                sent_by:
+                  description: |
+                    Quem está enviando a mensagem.
+                  type: string
+                  enum:
+                    - operator
+                    - bot
+                  example: 'bot'
+                operator:
+                  description: |
+                    ID do operador que está enviando a mensagem.
+                  type: string
+                  format: hash
+                  example: ''
+                template_message_id:
+                  description: |
+                    ID da mensagem de template. Pode ser encontado na opção de "Listar mensagens de
+                    template"
+                  type: string
+                  format: hash
+                  example: '55418bb52dd236bnvc52f1f'
+                variables:
+                  description: |
+                    Lista com os valores que irão substituir os parâmetros da mensagem template.
+                    Caso não queira substituir, basta enviar uma lista vazia (`"variables": [ ]`).
+                  type: array
+                  example:
+                    - 'Nome do produto'
+                    - 'valor do produto'
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    description: Mensagem enviada com sucesso
+                    type: string
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        422:
+          $ref: '#/components/responses/UnprocessableEntityError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X POST https://api.megasac.tallos.com.br/v2/messages/abc123/send-template-filled-by-brokers \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/x-www-form-urlencoded' \
+              -d '{
+                "template_message_id" : "Id da mensagem Template",
+                "sent_by" : "operator",
+                "operator" : "employee_id",
+                "variables" : []
+              }'
+        - lang: CURL
+          source: |
+            curl -X POST https://api.megasac.tallos.com.br/v2/v2/messages/abc123/send-template-filled-by-brokers \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/x-www-form-urlencoded' \
+              -d '{
+                "template_message_id" : "Id da mensagem Template",
+                "sent_by" : "bot",
+                "variables" : ["Valor para substituir a variável @OPERADOR"]
+              }'
+
+  /v2/messages/history:
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+
+    get:
+      operationId: history
+      tags:
+        - messages
+      summary: Histórico de Conversas (Exclusiva para conta Profissional)
+      description: |
+        > <i class="warn">icon</i>
+        > **Atenção:** Este recurso necessita de criptografia.
+        > [Saiba mais aqui](#section/Criptografia).
+
+        Retorna o histório de conversas de um cliente em um determinado período de datas.
+
+      parameters:
+        - $ref: '#/components/parameters/QueryLimit'
+        - $ref: '#/components/parameters/QueryPage'
+        - in: query
+          name: customer_id
+          description: |
+            ID do cliente que deseja retornar as mensagens
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: start_date
+          description: |
+            Data inicial do período a ser pesquisado o histórico de mensagens. Deve ser usado em
+            conjunto com o parâmetro end_date. Quando não informado, a pesquisa irá retornar as
+            mensagens dos últimos 30 dias.
+          schema:
+            type: string
+        - in: query
+          name: end_date
+          description: |
+            Data final do período a ser pesquisado o histórico de mensagens. Deve ser usado em
+            conjunto com o parâmetro start_date. Quando não informado, a pesquisa irá retornar as
+            mensagens dos últimos 30 dias.
+          schema:
+            type: string
+        - in: query
+          name: channel
+          description: |
+            Canal de comunicação.
+          schema:
+            type: string
+            enum:
+              - 'email'
+              - 'instagram'
+              - 'megasac'
+              - 'messenger'
+              - 'telegram'
+              - 'telegram'
+              - 'whatsapp'
+            default: 'whatsapp'
+        - in: query
+          name: sent_by
+          description: |
+            É possível informar um ou mais dos seguintes valores: customer, operator ou bot. O
+            padrão é: customer e operator.
+          schema:
+            type: string
+        - in: query
+          name: type
+          description: |
+            É possível informar um ou mais dos seguintes valores: text, image, audio, video, doc,
+            email, document, interactive, quick_reply, button_reply, location, call-to-action,
+            buttons_video, buttons_image, buttons_document, list, list_reply ou contact. O padrão é
+            `text`.
+          schema:
+            type: string
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - messages
+                properties:
+                  messages:
+                    description: |
+                      Lista criptografada com as mensagens do cliente.
+                    type: string
+                    example: 'eyJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwiYWxnIjoiUlNBLU9BRVAtMjU2Iiwia2lkIjoiVGo2cERVT18wbTctdDJFSmRVOXNDOEEtc0dyTkFVekpNLXV1dFl4TXRHbyJ9.Jud3OCkrLcDWrK0EHHXwTYAOVPnuURw_Ed7ZTDUKDJN1o_pDQuZ9jHpZYGJzTfkEEK3-Y9u_P3KodIvt3qu3Q614fRzLzFrWNxWHbmL4RV5E7sdu72Dw0eOOsjzi1-Xh0ZuGELeQcOMPn1fFJjxwQJT7o5heSoB6dJgtHRJE7Va6IlqgIAjZBihcdSXPlhO738lu2t2ZRl_M1sLWgi5IwFuKFweYVUoCMD3u335NdflfhK1IvcWIGJQ_0KR7CLXy6wUhIjGsyARjRq5JauSVYg-r8dbZqQZBAlHmcLld1IGnRVzSbTCuSQXUGu1jlh5dMDgCFGU6VwrZBtiMHqtpMQ.g4tp_v4AEH77eFxpjekkqg.Rw3xYlPLwyKXSuz8gkpkM5R7k5Q7yG1ax8Ig12oXtSfEXO_Zok5zfSILuc92FnqTauGuJZtQmfhMRI5EsPGA1lHLiapUtGQeYJeFDGvF_QYrOg7-bHf4PMdHTRacI4U-x83AwErv6NdEDwPWpD1M0rwA4CGgaRmIjbU3I6bHkbR6gg43bvUGuV12PfBvd3Qbr-FitQ5D7m7VLy6l-X8u7boBj3tUoogRa7UL0R880ELzVZWMOvimRKZH2LhfJy6uKeL6kcZJi4LR3ngxmi4cvCdCrhZzsr_7G66JRwPWgmYdjP8xEEhn3KgfnFeZTow361C1AvbNoST4mLl8mm9I6SZQQHtGvblactkotkbK49o.8IMItk6n0B_9H4-i2BAX3A'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        422:
+          $ref: '#/components/responses/UnprocessableEntityError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X GET https://api.megasac.tallos.com.br/v2/messages/history?customer_id=5fd0c3952c4d8c0349242d76&start_date=2020-12-01&end_date=2020-12-31&channel[]=whatsapp&channel[]=instagram&sent_by[]=customer&sent_by[]=operator&type[]=text&type[]=email \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/x-www-form-urlencoded'
+        - lang: JS
+          source: |
+            await fetch('https://api.megasac.tallos.com.br/v2/messages/history?customer_id=5fd0c3952c4d8c0349242d76&start_date=2020-12-01&end_date=2020-12-31&channel[]=whatsapp&channel[]=instagram&sent_by[]=customer&sent_by[]=operator&type[]=text&type[]=email', {
+              method: 'GET',
+              headers: {
+                'Authorization': 'Bearer afa924210118b9fd364a4da84d3fcdf7',
+                'Content-Type': 'application/json',
+              },
+            }).then(response => response.json());
+
+  /api/v3/message/template/send:
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+
+    post:
+      operationId: send-template-by-number
+      tags:
+        - messages
+      summary: Enviar mensagens de template (Apenas na rota V3)
+      description: |
+        > <i class="info">icon</i>
+        > Este recurso está disponível apenas na nova versão da API (v3).
+
+        Este recurso permite enviar mensagens de template passando o número de telefone do contato.
+        O envio dessa mensagem não cria um atendimento.
+
+      requestBody:
+        description: |
+          Objeto com os dados da mensagem de template.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - template_message_id
+                - recipient_number
+              properties:
+                template_message_id:
+                  description: |
+                    ID da mensagem de template.
+                  type: string
+                  format: hash
+                  example: 6ad651876xxxxxxxxxxxxx
+                recipient_number:
+                  description: |
+                    Número do destinatário. O número deve estar no formato E.164.
+                  type: string
+                  pattern: \d+
+                  example: '+55 11 999-888-777"'
+                country_code:
+                  description: |
+                    Código do país do destinatário.
+                  type: string
+                  default: '55'
+                  example: '55'
+                variables:
+                  description: |
+                    Variaveis para substituir campos do template.
+                  type: array
+                  items:
+                    type: string
+                  example:
+                    - 'Bom dia'
+                    - 'João'
+                sent_by:
+                  description: |
+                    Quem enviou a mensagem. Pode ser 'operator' ou 'bot'. Se for enviado 'operator',
+                    é necessário informar o ID do operador (operator_id) que enviou a mensagem.
+                  type: string
+                  enum:
+                    - operator
+                    - bot
+                  default: 'bot'
+                  example: 'bot'
+                operator_id:
+                  description: |
+                    ID do operador que enviou a mensagem. Esse campo é obrigatório se o campo
+                    `"sent_by": "operator"`.
+                  type: string
+                  format: hash
+                  example: '6ad651876xxxxxxxxxxxxx'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X POST https://kong.tallos.com.br/megasac-api/api/v3/message/template/send \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json' \
+              -d '{
+                    "sent_by": "bot",
+                    "template_message_id": "632xxxxxxxxxxxxxxxx",
+                    "recipient_number": "+55 11 999-888-777"",
+                }'
+        - lang: JS
+          source: |
+            await fetch('https://kong.tallos.com.br/megasac-api/api/v3/message/template/send', {
+              method: 'POST',
+              headers: {
+                'Authorization': 'Bearer afa924210118b9fd364a4da84d3fcdf7',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                sent_by: 'bot',
+                template_message_id: '632xxxxxxxxxxxxxxxx',
+                recipient_number: '+55 11 999-888-777"',
+              }),
+            }).then(response => response.json());
+
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                title: Data of sended template
+                type: object
+                required:
+                  - id
+                  - content
+                properties:
+                  data:
+                    description: |
+                      Informações da mensagem enviada.
+                    type: object
+                    properties:
+                      id:
+                        description: |
+                          ID da mensagem enviada.
+                        type: string
+                        format: hash
+                        example: '6ad651876xxxxxxxxxxxxx'
+                      senty_by:
+                        description: |
+                          Por quem a mensagem foi enviada.
+                        type: string
+                        example: 'operator'
+                      status:
+                        type: string
+                        description: |
+                          Status da mensagem no momento.
+                        example: 'checked'
+                      template:
+                        description: |
+                          Informações do template.
+                        type: object
+                        properties:
+                          id:
+                            description: |
+                              ID do template.
+                            type: string
+                            format: hash
+                            example: '6ad651876xxxxxxxxxxxxx'
+                          content:
+                            description: |
+                              Conteúdo puro do template.
+                            type: string
+                            example: 'Conteúdo puro do template'
+                  message:
+                    description: 'Successful message'
+                    type: string
+                    example: 'Message successfully sent'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+
+  /v2/template/all:
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+
+    get:
+      operationId: getTemplate
+      tags:
+        - templates
+      summary: Listar mensagens de template
+      description: |
+        Listar todas as mensagens de template da empresa.
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - templates
+                properties:
+                  templates:
+                    description: 'List of all company template messages'
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - id
+                        - content
+                      properties:
+                        id:
+                          description: |
+                            ID do template.
+                          type: string
+                          format: hash
+                        content:
+                          description: |
+                            Texto do template.
+                          type: string
+                        content_media:
+                          description: |
+                            Tipo de mídia do conteúdo da mensagem.
+                          type: string
+                    example:
+                      - id: 1
+                        content: 'Olá, meu nome é @NOMEOPERADOR e irei lhe atender!'
+                      - id: 2
+                        content: 'Olá {{1}}, seja bem vindo!'
+                        content_media: 'url da mídia'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X GET https://api.megasac.tallos.com.br/v2/template/all \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json'
+        - lang: JS
+          source: |
+            await fetch('https://api.megasac.tallos.com.br/v2/template/all', {
+              method: 'GET',
+              headers: {
+                'Authorization': 'Bearer afa924210118b9fd364a4da84d3fcdf7',
+                'Content-Type': 'application/json',
+              },
+            }).then(response => response.json());
+
+  /v2/employees:
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+
+    get:
+      operationId: getEmployees
+      tags:
+        - employees
+      summary: Listar todos os funcionários
+      description: |
+        Listar todos os funcionários.
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  employees:
+                    description: Lista de todos os funcionários da empresa.
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Employee'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X GET https://api.megasac.tallos.com.br/v2/employees \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json'
+        - lang: JS
+          source: |
+            await fetch('https://api.megasac.tallos.com.br/v2/employees', {
+              method: 'GET',
+              headers: {
+                'Authorization': 'Bearer afa924210118b9fd364a4da84d3fcdf7',
+                'Content-Type': 'application/json',
+              },
+            }).then(response => response.json());
+
+  /v2/employees/{employeeId}/deactivate:
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+      - in: path
+        name: employeeId
+        description: |
+          ID do funcionário que será inativado.
+        required: true
+        schema:
+          type: string
+          format: hash
+
+    put:
+      operationId: putDeactivateEmployee
+      tags:
+        - employees
+      summary: Inativar um funcionário
+      description: |
+        Inativa o acesso de um funcionário, impossibilitando seu login.
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    description: |
+                      Process status message
+                    type: string
+                    example: 'Employee successfully deactivated'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        409:
+          $ref: '#/components/responses/ConflictError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X PUT https://api.megasac.tallos.com.br/v2/employees/abc123/deactivate \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json'
+        - lang: JS
+          source: |
+            await fetch('https://api.megasac.tallos.com.br/v2/employees/abc123/deactivate', {
+              method: 'PUT',
+              headers: {
+                'Authorization': 'Bearer afa924210118b9fd364a4da84d3fcdf7',
+                'Content-Type': 'application/json',
+              },
+            }).then(response => response.json());
+
+  /v2/employees/{employeeId}/activate:
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+      - in: path
+        name: employeeId
+        description: |
+          ID do funcionário que será ativado.
+        required: true
+        schema:
+          type: string
+          format: hash
+
+    put:
+      operationId: putActivateEmployee
+      tags:
+        - employees
+      summary: Ativar um funcionário
+      description: |
+        Ativa o acesso de um funcionário, possibilitando seu login.
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    description: |
+                      Process status message
+                    type: string
+                    example: 'Employee successfully activated'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        409:
+          $ref: '#/components/responses/ConflictError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X PUT https://api.megasac.tallos.com.br/v2/employees/abc123/activate \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json'
+        - lang: JS
+          source: |
+            await fetch('https://api.megasac.tallos.com.br/v2/employees/abc123/activate', {
+              method: 'PUT',
+              headers: {
+                'Authorization': 'Bearer afa924210118b9fd364a4da84d3fcdf7',
+                'Content-Type': 'application/json',
+              },
+            }).then(response => response.json());
+
+  /v2/contacts:
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+
+    post:
+      operationId: createContact
+      tags:
+        - contacts
+      summary: Criar Contato
+      description: |
+        Criar um contato com base em seus dados.
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - cel_phone
+              properties:
+                full_name:
+                  description: Nome completo do contato.
+                  type: string
+                  nullable: true
+                  example: 'John Tallos'
+                integration:
+                  description: Integração do WhatsApp a qual o contato será criado.
+                  type: string
+                  default: 'integration-1'
+                  example: 'integration-1'
+                description:
+                  description: Descrição
+                  type: string
+                  nullable: true
+                  example: 'Consequatur nemo esse quasi voluptates qui quae aut ut. Illo temporibus natus reprehenderit quis neque sapiente eligendi similique. Minus inventore quo labore blanditiis eius quasi. In ipsum occaecati ullam autem saepe.'
+                cel_phone:
+                  description: Número de telefone do contato.
+                  type: string
+                  example: '+55 11 999-888-777'
+                email:
+                  description: Endereço de e-mail do contato.
+                  type: string
+                  format: email
+                  nullable: true
+                  example: 'john.tallos@email.com'
+                birth_date:
+                  description: Data de aniversário do contato.
+                  type: string
+                  format: date
+                  nullable: true
+                  example: '30/03/1992'
+                cnpj:
+                  description: Número de CNPJ do contato.
+                  type: string
+                  pattern: \d{2}\.?\d{3}\.?\d{3}\/\d{4}\-\d{2}
+                  nullable: true
+                  example: '12.345.678/0009-10'
+                cpf:
+                  description: Número de CPF do contato.
+                  type: string
+                  pattern: \d{3}\.?\d{3}\.?\d{3}\-\d{2}
+                  nullable: true
+                  example: '123.456.789-10'
+                rg:
+                  description: Número de RG do contato.
+                  type: string
+                  pattern: \d{1,2}\.?\d{3}\.?\d{3}\-\d
+                  nullable: true
+                  example: '12.345.678-9'
+                code:
+                  description: Código do cliente.
+                  type: string
+                  nullable: true
+                  example: 'abcd1234'
+                department_name:
+                  description: Nome do setor a qual o contato será direcionado.
+                  type: string
+                  nullable: true
+                  example: 'Vendas'
+                wallet_name:
+                  description: Nome da carteira a qual o contato será atribuído.
+                  type: string
+                  nullable: true
+                  example: 'Carteira Teste'
+                workflow_title:
+                  description: Título do workflow a qual o contato será atribuído.
+                  type: string
+                  nullable: true
+                  example: 'Workflow Teste'
+                workflow_stage_title:
+                  description: Título da etapa de workflow a qual o contato será atribuído (obrigatório se o Título do Workflow for submetido).
+                  type: string
+                  nullable: true
+                  example: 'Etapa Teste'
+                address:
+                  description: Informações de endereço do contato.
+                  nullable: true
+                  allOf:
+                    - $ref: '#/components/schemas/Address'
+                job:
+                  description: Informações de trabalho do contato.
+                  nullable: true
+                  allOf:
+                    - $ref: '#/components/schemas/Job'
+                tags:
+                  description: Tags que serão atribuídas ao contato.
+                  type: array
+                  nullable: true
+                  example:
+                    - 'tag1'
+                    - 'tag2'
+
+      responses:
+        200: # FIXME: should be "201"
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - title: Criação Assíncrona
+                    type: object
+                    properties:
+                      success:
+                        description: Mensagem de sucesso.
+                        type: string
+                        example: 'Contact successfully updated, and redirected to queue.'
+                  - title: Criação s/ Mensagem
+                    type: object
+                    properties:
+                      customer:
+                        $ref: '#/components/schemas/Contact'
+                  - title: Criação c/ Mensagem de Sucesso.
+                    type: object
+                    properties:
+                      success:
+                        description: Mensagem de sucesso.
+                        type: string
+                        example: 'Contact created successfully.'
+                      customer:
+                        $ref: '#/components/schemas/Contact'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        405: # FIXME: should be "403"
+          $ref: '#/components/responses/ForbiddenError'
+        409: # FIXME: should be "400"
+          $ref: '#/components/responses/ConflictError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X POST https://api.megasac.tallos.com.br/v2/contacts \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json' \
+              -d '{
+                    "full_name" : "Jonh Tallos",
+                    "cel_phone" : "+55 11 999-888-777"
+                }'
+        - lang: JS
+          source: |
+            await fetch('https://api.megasac.tallos.com.br/v2/contacts', {
+              method: 'POST',
+              headers: {
+                'Authorization': 'Bearer afa924210118b9fd364a4da84d3fcdf7',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                full_name: 'Jonh Tallos',
+                cel_phone : '+55 11 999-888-777',
+              }),
+            }).then(response => response.json());
+        - lang: CURL
+          source: |
+            curl -X POST https://api.megasac.tallos.com.br/v2/contacts \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json' \
+              -d '{
+                    "cel_phone" : "+55 11 999-888-777",
+                    "email" : "john.tallos@email.com",
+                    "integration": "meta-vendas"
+                }'
+        - lang: JS
+          source: |
+            await fetch('https://api.megasac.tallos.com.br/v2/contacts', {
+              method: 'POST',
+              headers: {
+                'Authorization': 'Bearer afa924210118b9fd364a4da84d3fcdf7',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                cel_phone : '+55 11 999-888-777',
+                email : 'john.tallos@email.com',
+                integration: 'meta-vendas',
+              }),
+            }).then(response => response.json());
+
+  /v2/contacts/{celPhone}:
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+      - in: path
+        name: celPhone
+        description: |
+          Número do telefone do contato.
+
+          **Observações:** o número deve estar completo para que seja indicado como existente ou não
+          existente, levando em consideração o padrão de cada país.
+          - **Brail:** `+55` + DDD + número local com 8 ou 9 dígitos (e.g. `+55 11 98888-8888`, `+55 85 3030-3030`)
+          - **Internacional:** verificar o padrão do país (e.g. `+(1)(425) 555-0100`, `+14255550100`)
+        required: true
+        schema:
+          type: string
+          pattern: \d+
+
+    patch:
+      operationId: patchContact
+      tags:
+        - contacts
+      summary: Atualizar Atributos de Contato
+      description: |
+        Esse endpoint atualiza os dados de um determinado contato somente a partir de um telefone de
+        referência **apenas** nos campos que estiverem presentes no corpo da requisição.
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                full_name:
+                  description: Nome completo do contato.
+                  type: string
+                  example: 'John Tallos'
+                description:
+                  description: Descrição
+                  type: string
+                  nullable: true
+                  example: null
+                cel_phone:
+                  description: Número de telefone do contato.
+                  type: string
+                  pattern: \d+
+                  example: '+55 11 999-888-777'
+                email:
+                  description: Endereço de e-mail do contato.
+                  type: string
+                  format: email
+                  nullable: true
+                  example: 'john.tallos@email.com'
+                birth_date:
+                  description: Data de aniversário do contato.
+                  type: string
+                  format: date
+                  nullable: true
+                  example: '30/03/1992'
+                cnpj:
+                  description: Número de CNPJ do contato.
+                  type: string
+                  pattern: \d{2}\.?\d{3}\.?\d{3}\/\d{4}\-\d{2}
+                  nullable: true
+                  example: '12.345.678/0009-10'
+                cpf:
+                  description: Número de CPF do contato.
+                  type: string
+                  pattern: \d{3}\.?\d{3}\.?\d{3}\-\d{2}
+                  nullable: true
+                  example: '123.456.789-10'
+                rg:
+                  description: Número de RG do contato.
+                  type: string
+                  pattern: \d{1,2}\.?\d{3}\.?\d{3}\-\d
+                  nullable: true
+                  example: '12.345.678-9'
+                code:
+                  description: Código do cliente.
+                  type: string
+                  nullable: true
+                  example: 'abcd1234'
+                address:
+                  description: Informações de endereço do contato.
+                  nullable: true
+                  allOf:
+                    - $ref: '#/components/schemas/Address'
+                job:
+                  description: Informações de trabalho do contato.
+                  nullable: true
+                  allOf:
+                    - $ref: '#/components/schemas/Job'
+                tags:
+                  description: Tags que serão atribuídas ao contato.
+                  type: array
+                  nullable: true
+                  items:
+                    type: string
+                  example:
+                    - 'tag1'
+                    - 'tag2'
+                customizable_field:
+                  description: Informações adicionais do contato.
+                  type: array
+                  nullable: true
+                  items:
+                    type: object
+                    properties:
+                      label:
+                        type: string
+                      info:
+                        type: string
+                  example:
+                    - label: 'Campo 1'
+                      info: 'Informação do Campo 1'
+                    - label: 'Campo 2'
+                      info: 'Informação do Campo 2'
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  customerId:
+                    description: ID do contato
+                    allOf:
+                      - $ref: '#/components/schemas/Id'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X PATCH https://api.megasac.tallos.com.br/v2/contacts/+5511999888777 \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json' \
+              -d '{
+                    "full_name" : "Jonh Tallos"
+                }'
+        - lang: JS
+          source: |
+            await fetch('https://api.megasac.tallos.com.br/v2/contacts/+5511999888777', {
+              method: 'PATCH',
+              headers: {
+                'Authorization': 'Bearer afa924210118b9fd364a4da84d3fcdf7',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                full_name: 'Jonh Tallos',
+              }),
+            }).then(response => response.json());
+
+  /v2/contacts/whatsapp-business:
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+
+    post:
+      operationId: createContactWhatsAppBusiness
+      tags:
+        - contacts
+      summary: Criar Contato no WhatsApp Business
+      description: |
+        Criar um contato com base em seus dados.
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - full_name
+                - cel_phone
+                - whatsapp_name
+              properties:
+                full_name:
+                  description: Nome completo do contato.
+                  type: string
+                  example: 'John Tallos'
+                description:
+                  description: Descrição
+                  type: string
+                  nullable: true
+                  example: 'Consequatur nemo esse quasi voluptates qui quae aut ut. Illo temporibus natus reprehenderit quis neque sapiente eligendi similique. Minus inventore quo labore blanditiis eius quasi. In ipsum occaecati ullam autem saepe.'
+                cel_phone:
+                  description: Número de telefone do contato.
+                  type: string
+                  example: '+55 11 999-888-777'
+                email:
+                  description: Endereço de e-mail do contato.
+                  type: string
+                  format: email
+                  nullable: true
+                  example: 'john.tallos@email.com'
+                birth_date:
+                  description: Data de aniversário do contato.
+                  type: string
+                  format: date
+                  nullable: true
+                  example: '30/03/1992'
+                cnpj:
+                  description: Número de CNPJ do contato.
+                  type: string
+                  pattern: \d{2}\.?\d{3}\.?\d{3}\/\d{4}\-\d{2}
+                  nullable: true
+                  example: '12.345.678/0009-10'
+                cpf:
+                  description: Número de CPF do contato.
+                  type: string
+                  pattern: \d{3}\.?\d{3}\.?\d{3}\-\d{2}
+                  nullable: true
+                  example: '123.456.789-10'
+                rg:
+                  description: Número de RG do contato.
+                  type: string
+                  pattern: \d{1,2}\.?\d{3}\.?\d{3}\-\d
+                  nullable: true
+                  example: '12.345.678-9'
+                code:
+                  description: Código do contato.
+                  type: string
+                  nullable: true
+                  example: 'abcd1234'
+                department_name:
+                  description: Nome do setor a qual o contato será direcionado.
+                  type: string
+                  nullable: true
+                  example: 'Vendas'
+                cel_phone_secondary0:
+                  description: Número de telefone alternativo do contato.
+                  type: string
+                  pattern: \d+
+                  example: '+55 11 999-888-777'
+                cel_phone_secondary1:
+                  description: Número de telefone alternativo do contato.
+                  type: string
+                  pattern: \d+
+                  example: '+55 11 999-888-777'
+                whatsapp_name:
+                  description: Nome amigável para a conta de WhatsApp do contato.
+                  type: string
+                  example: 'WhatsApp Vendas'
+                address:
+                  description: Informações de endereço do contato.
+                  nullable: true
+                  allOf:
+                    - $ref: '#/components/schemas/Address'
+                customizable_field:
+                  description: Informações adicionais do contato.
+                  type: array
+                  nullable: true
+                  items:
+                    type: object
+                    properties:
+                      label:
+                        type: string
+                      info:
+                        type: string
+                  example:
+                    - label: 'Campo 1'
+                      info: 'Informação do Campo 1'
+                    - label: 'Campo 2'
+                      info: 'Informação do Campo 2'
+                job:
+                  description: Informações de trabalho do contato.
+                  nullable: true
+                  allOf:
+                    - $ref: '#/components/schemas/Job'
+                selected_tags:
+                  description: Tags que serão atribuídas ao contato.
+                  type: array
+                  nullable: true
+                  example:
+                    - 'tag1'
+                    - 'tag2'
+
+      responses:
+        200: # TODO: "200" only if already exists. "201" if created.
+          description: Success
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - title: Contato Criado
+                    allOf:
+                      - $ref: '#/components/schemas/Contact'
+                  - title: Contato Existente
+                    type: object
+                    properties:
+                      success:
+                        description: Mensagem de sucesso.
+                        type: string
+                        example: |
+                          'Contato já cadastrado. O contato foi direcionado para a fila de espera.'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        409: # FIXME: should be "400"
+          $ref: '#/components/responses/ConflictError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X POST https://api.megasac.tallos.com.br/v2/contacts/whatsapp-business \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json' \
+              -d '{
+                    "full_name": "Jonh Tallos",
+                    "cel_phone": "+55 11 999-888-777",
+                    "email": "john.tallos@email.com",
+                    "whatsapp_name": "Vendas"
+                }'
+        - lang: JS
+          source: |
+            await fetch('https://api.megasac.tallos.com.br/v2/contacts/whatsapp-business', {
+              method: 'POST',
+              headers: {
+                'Authorization': 'Bearer afa924210118b9fd364a4da84d3fcdf7',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                full_name: 'Jonh Tallos',
+                cel_phone : '+55 11 999-888-777',
+                email: 'john.tallos@email.com',
+                whatsapp_name: 'Vendas',
+              }),
+            }).then(response => response.json());
+
+    put:
+      operationId: putContactWhatsappBusiness
+      tags:
+        - contacts
+      summary: Atualização Whatsapp Business
+      description: |
+        Atualização de um contato com base em seus dados.
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutContactWhatsappBusiness'
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostContact200'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        409:
+          $ref: '#/components/responses/ConflictError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X PUT https://api.megasac.tallos.com.br/v2/contacts/whatsapp-business \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json' \
+              -d '{
+                    "full_name" : "Jonh Tallos",
+                    "cel_phone" : "+55 11 999-888-777"
+                }'
+        - lang: CURL
+          source: |
+            curl -X PUT https://api.megasac.tallos.com.br/v2/contacts/whatsapp-business \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json' \
+              -d '{
+                    "full_name" : "Jonh Tallos",
+                    "cel_phone" : "+55 11 999-888-777",
+                }'
+
+  /v2/contacts/whatsapp-business-by-brokers:
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+
+    post:
+      operationId: postContactWhatsappOfficial
+      tags:
+        - contacts
+      summary: Criação Contato Whatsapp Business (Dialog/Gupshup)
+      description: |
+        Criar um contato com base em seus dados.
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactWhatsappBusiness'
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostContact200'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        409:
+          $ref: '#/components/responses/ConflictError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X POST https://api.megasac.tallos.com.br/v2/contacts/whatsapp-business-by-brokers \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json' \
+              -d '{
+                    "full_name" : "Jonh Tallos",
+                    "cel_phone" : "+55 11 999-888-777"
+                }'
+        - lang: CURL
+          source: |
+            curl -X POST https://api.megasac.tallos.com.br/v2/contacts/whatsapp-business-by-brokers \
+              -H 'Content-Type: application/json' \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -d '{
+                    "full_name" : "Jonh Tallos",
+                    "cel_phone" : "+55 11 999-888-777",
+                    "email" : "john.tallos@email.com"
+                }'
+
+    put:
+      operationId: putContactWhatsappOfficial
+      tags:
+        - contacts
+      summary: Atualização Contato Whatsapp Business (Dialog/Gupshup)
+      description: |
+        Atualização um contato com base em seus dados.
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutContactWhatsappBusiness'
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponsePostContact200'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        409:
+          $ref: '#/components/responses/ConflictError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X PUT https://api.megasac.tallos.com.br/v2/contacts/whatsapp-business-by-brokers \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json' \
+              -d '{
+                    "full_name" : "Jonh Tallos",
+                    "cel_phone" : "+55 11 999-888-777"
+                }'
+        - lang: CURL
+          source: |
+            curl -X PUT https://api.megasac.tallos.com.br/v2/contacts/whatsapp-business-by-brokers \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json' \
+              -d '{
+                    "full_name" : "Jonh Tallos",
+                    "cel_phone" : "+55 11 999-888-777",
+                }'
+
+  /v2/contacts/{celPhone}/exists: # TODO: use RESTful standard for getting single data
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+      - in: path
+        name: celPhone
+        description: |
+          Número do telefone do contato.
+
+          **Observações:** o número deve estar completo para que seja indicado como existente ou não
+          existente, levando em consideração o padrão de cada país.
+          - **Brail:** `+55` + DDD + número local com 8 ou 9 dígitos (e.g. `+55 11 98888-8888`, `+55 85 3030-3030`)
+          - **Internacional:** verificar o padrão do país (e.g. `+(1)(425) 555-0100`, `+14255550100`)
+        required: true
+        schema:
+          type: string
+          pattern: \d+
+
+    get:
+      operationId: findContactByPhone
+      tags:
+        - contacts
+      summary: Buscar Contato por Telefone
+      description: |
+        Bsucar um determinado contato a partir de um número de telefone.
+
+      parameters:
+        - in: query
+          name: country_code
+          description: |
+            Código do país.
+          schema:
+            type: integer
+            format: int32
+        - in: query
+          name: channel
+          description: |
+            Canal de comunicação.
+          schema:
+            type: string
+            enum:
+              - 'email'
+              - 'instagram'
+              - 'megasac'
+              - 'messenger'
+              - 'telegram'
+              - 'telegram'
+              - 'whatsapp'
+            default: 'whatsapp'
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                description: Estado da resposta.
+                type: object
+                properties:
+                  message:
+                    description: Mensagem de sucesso.
+                    type: string
+                    example: 'Contact already exists'
+                  data:
+                    description: Objeto do contato buscado.
+                    allOf:
+                      - $ref: '#/components/schemas/Contact'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X GET https://api.megasac.tallos.com.br/v2/contacts/11999888777/exists \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json'
+        - lang: JS
+          source: |
+            await fetch('https://api.megasac.tallos.com.br/v2/contacts/11999888777/exists', {
+              method: 'GET',
+              headers: {
+                'Authorization': 'Bearer afa924210118b9fd364a4da84d3fcdf7',
+                'Content-Type': 'application/json',
+              },
+            }).then(response => response.json());
+
+  /v2/contacts/cpf/{cpf}/exists: # TODO: use RESTful standard for getting single data
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+      - in: path
+        name: cpf
+        description: |
+          CPF do contato.
+
+          **Observação:** apenas números devem ser informados.
+        required: true
+        schema:
+          type: string
+          pattern: \d{3}\.?\d{3}\.?\d{3}\-\d{2}
+
+    get:
+      operationId: findContactByCPF
+      tags:
+        - contacts
+      summary: Buscar Contato por CPF
+      description: |
+        Bsucar um determinado contato a partir de um número de CPF.
+
+      parameters:
+        - in: query
+          name: channel
+          description: |
+            Canal de comunicação.
+          schema:
+            type: string
+            enum:
+              - 'email'
+              - 'instagram'
+              - 'megasac'
+              - 'messenger'
+              - 'telegram'
+              - 'telegram'
+              - 'whatsapp'
+            default: 'whatsapp'
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                description: Estado da resposta.
+                type: object
+                properties:
+                  message:
+                    description: Mensagem de sucesso.
+                    type: string
+                    example: 'Contact already exists'
+                  data:
+                    description: Objeto do contato buscado.
+                    allOf:
+                      - $ref: '#/components/schemas/Contact'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X GET https://api.megasac.tallos.com.br/v2/contacts/cpf/12345678910/exists \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json'
+        - lang: JS
+          source: |
+            await fetch('https://api.megasac.tallos.com.br/v2/contacts/cpf/12345678910/exists', {
+              method: 'GET',
+              headers: {
+                'Authorization': 'Bearer afa924210118b9fd364a4da84d3fcdf7',
+                'Content-Type': 'application/json',
+              },
+            }).then(response => response.json());
+
+  /v4/reports:
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+
+    get:
+      operationId: getReports
+      servers:
+        - description: |
+            API de relatórios.
+          url: https://api.tallos.com.br
+      tags:
+        - reports
+      summary: Relatório de atendimentos
+      description: |
+        Consulta dados dos relatórios de atendimento.
+
+      parameters:
+        - $ref: '#/components/parameters/QueryPage'
+        - $ref: '#/components/parameters/QueryLimit'
+        - in: query
+          name: start_date
+          description: |
+            Data de início do relatório.
+          required: true
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: end_date
+          description: |
+            Data de fim do relatório.
+          required: true
+          schema:
+            type: string
+            format: date
+        - in: query
+          name: take
+          description: |
+            Quantidade de registros.
+          schema:
+            type: integer
+            format: int32
+        - in: query
+          name: skip
+          description: |
+            Pular registros.
+          schema:
+            type: integer
+            format: int32
+        - in: query
+          name: department
+          description: |
+            Filtrar por departamento.
+          schema:
+            type: string
+        - in: query
+          name: channel
+          description: |
+            Filtrar por canal de comunicação.
+          schema:
+            type: string
+            enum:
+              - 'email'
+              - 'instagram'
+              - 'megasac'
+              - 'messenger'
+              - 'telegram'
+              - 'telegram'
+              - 'whatsapp'
+        - in: query
+          name: employee
+          description: |
+            Filtrar por ID do operador.
+          schema:
+            type: string
+        - in: query
+          name: tabulation
+          description: |
+            Filtrar por tabulação.
+          schema:
+            type: string
+        - in: query
+          name: status
+          description: |
+            Filtrar por status (opened ou closed).
+          schema:
+            type: string
+            enum:
+              - opened
+              - closed
+        - in: query
+          name: type
+          description: |
+            Filtrar por tipo (customers, operators, chatbots, rejecteds).
+          schema:
+            type: string
+            enum:
+              - customers
+              - operators
+              - chatbots
+              - rejecteds
+            default: operators
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                properties:
+                  reports:
+                    description: Lista de relatórios encontrados.
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Report'
+                    example:
+                      - id: 1
+                        title: Relatório de Vendas
+                        description: Descrição do relatório
+                        createdAt: '2024-05-01T00:00:00.000Z'
+                        updatedAt: '2024-05-01T00:00:00.000Z'
+                      - id: 2
+                        title: Relatório de Atendimentos
+                        description: Detalhes dos atendimentos realizados
+                        createdAt: '2024-05-05T00:00:00.000Z'
+                        updatedAt: '2024-05-05T00:00:00.000Z'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X GET https://api.tallos.com.br/v4/reports?start_date=2021-01-01&end_date=2021-01-31&take=10&skip=0 \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json'
+        - lang: CURL
+          source: |
+            curl -X GET https://api.tallos.com.br/v4/reports?start_date=2021-01-01&end_date=2021-01-31&take=10&skip=0&page=1&limit=20 \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json'
+        - lang: CURL
+          source: |
+            curl -X GET https://api.tallos.com.br/v4/reports?start_date=2021-01-01&end_date=2021-01-31&take=10&skip=0\
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json'
+
+  /v2/wallets:
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+
+    get:
+      operationId: getCompanyWallets
+      tags:
+        - wallets
+      summary: Listar carteiras
+      description: |
+        Listar todas as carteiras da uma empresa.
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - wallets
+                properties:
+                  wallets:
+                    description: |
+                      Lista de carteiras.
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Wallet'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        409:
+          $ref: '#/components/responses/ConflictError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X GET https://api.megasac.tallos.com.br/v2/wallets \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json'
+        - lang: JS
+          source: |
+            await fetch('https://api.megasac.tallos.com.br/v2/wallets', {
+              method: 'GET',
+              headers: {
+                'Authorization': 'Bearer afa924210118b9fd364a4da84d3fcdf7',
+                'Content-Type': 'application/json',
+              },
+            }).then(response => response.json());
+
+    post:
+      operationId: postAddCustomerToWallet
+      tags:
+        - wallets
+      summary: Incluir cliente em carteira
+      description: |
+        Inclusão de um cliente em uma carteira.
+
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer:
+                  description: ID do cliente que será incluído na carteira.
+                  allOf:
+                    - $ref: '#/components/schemas/Id'
+                wallet:
+                  $ref: '#/components/schemas/Wallet'
+
+      responses:
+        '204':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wallet'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        409:
+          $ref: '#/components/responses/ConflictError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X POST https://api.megasac.tallos.com.br/v2/wallets \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json' \
+              -d '{
+                    "customer" : "3jh8hlyi9f0fd0d25ki8",
+                    "wallet" : "nome da carteira"
+                }'
+        - lang: JS
+          source: |
+            await fetch('https://api.megasac.tallos.com.br/v2/wallets', {
+              method: 'POST',
+              headers: {
+                'Authorization': 'Bearer afa924210118b9fd364a4da84d3fcdf7',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                customer: '3jh8hlyi9f0fd0d25ki8',
+                wallet: 'nome da carteira',
+              }),
+            }).then(response => response.json());
+
+  /v2/wallets/{customerId}:
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+      - in: path
+        name: customerId
+        description: |
+          ID do cliente a ser removido da carteira.
+        required: true
+        schema:
+          type: string
+          format: hash
+
+    patch:
+      operationId: patchRemoveCustomerWallet
+      tags:
+        - wallets
+      summary: Remover cliente de carteira
+      description: |
+        Remove um cliente da carteira.
+
+      responses:
+        '204':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Wallet'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        409:
+          $ref: '#/components/responses/ConflictError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X PATCH https://api.megasac.tallos.com.br/v2/wallets/6ad651876xxxxxxxxxxxxx \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json'
+        - lang: JS
+          source: |
+            await fetch('https://api.megasac.tallos.com.br/v2/wallets/6ad651876xxxxxxxxxxxxx', {
+              method: 'PATCH',
+              headers: {
+                'Authorization': 'Bearer afa924210118b9fd364a4da84d3fcdf7',
+                'Content-Type': 'application/json',
+              },
+            }).then(response => response.json());
+
+  /v2/workflows:
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+
+    get:
+      operationId: getWorkflows
+      tags:
+        - workflows
+      summary: Listar Workflows
+      description: |
+        Listar todos os Workflows e todos os seus estágios.
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - worklows
+                properties:
+                  worklows:
+                    description: Lista de workflows.
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Workflow'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X GET https://api.megasac.tallos.com.br/v2/workflows \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json'
+        - lang: JS
+          source: |
+            await fetch('https://api.megasac.tallos.com.br/v2/workflows', {
+              method: 'GET',
+              headers: {
+                'Authorization': 'Bearer afa924210118b9fd364a4da84d3fcdf7',
+                'Content-Type': 'application/json',
+              },
+            }).then(response => response.json());
+
+  /v2/flows:
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+
+    get:
+      operationId: getFlows
+      tags:
+        - flows
+      summary: Listar Flows
+      description: |
+        Listar todos os Flows de uma empresa.
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - flows
+                properties:
+                  flows:
+                    description: |
+                      Listas os fluxos.
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Flow'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X GET https://api.megasac.tallos.com.br/v2/flows \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' |
+              -H 'Content-Type: application/json'
+        - lang: JS
+          source: |
+            await fetch('https://api.megasac.tallos.com.br/v2/flows', {
+              method: 'GET',
+              headers: {
+                'Authorization': 'Bearer afa924210118b9fd364a4da84d3fcdf7',
+                'Content-Type': 'application/json',
+              },
+            }).then(response => response.json());
+
+  /v2/forward-to-customer:
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+
+    post:
+      operationId: customerToFlow
+      tags:
+        - flows
+      summary: Configurar cliente em flow
+      description: |
+        Configurar cliente em flow, associando ele a um fluxo que será iniciado quando este entrar em contato.
+
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - message
+              properties:
+                customer:
+                  description: |
+                    ID do cliente.
+                  type: string
+                  format: hash
+                  example: '40ba5-f6252-170d1-2a88b3'
+                flow:
+                  description: |
+                    ID do fluxo que será configurado como fluxo inicial do cliente.
+                  type: string
+                  format: hash
+                  example: '60ba7-f9252-170d1-1a88b2'
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    description: Success message
+                    type: string
+                    example: 'Customer forwarded successfully'
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X POST https://api.megasac.tallos.com.br/v2/forward-to-customer \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json'
+        - lang: JS
+          source: |
+            await fetch('https://api.megasac.tallos.com.br/v2/forward-to-customer', {
+              method: 'POST',
+              headers: {
+                'Authorization': 'Bearer afa924210118b9fd364a4da84d3fcdf7',
+                'Content-Type': 'application/json',
+              },
+            }).then(response => response.json());
+
+  /v2/reset-customers-flow-processes:
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+
+    post:
+      operationId: resetCustomersFlowProcesses
+      tags:
+        - flows
+      summary: Reiniciar processos de contatos
+      description: |
+        Reinicia os processos de todos os contatos da empresa, deixando-os em processo de fluxo para o fluxo indicado.
+
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - message
+              properties:
+                flow:
+                  description: |
+                    ID do fluxo que será redefinido como fluxo inicial do cliente.
+                  type: string
+                  format: hash
+                  example: '60ba7-f9252-170d1-1a88b2'
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - message
+                properties:
+                  message:
+                    description: |
+                      Mensagem indicando se a operação foi realizada com sucesso ou com erro.
+                    type: string
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        409:
+          $ref: '#/components/responses/ConflictError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X POST https://api.megasac.tallos.com.br/v2/reset-customers-flow-processes \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json'
+        - lang: JS
+          source: |
+            await fetch('https://api.megasac.tallos.com.br/v2/reset-customers-flow-processes', {
+              method: 'POST',
+              headers: {
+                'Authorization': 'Bearer afa924210118b9fd364a4da84d3fcdf7',
+                'Content-Type': 'application/json',
+              },
+            }).then(response => response.json());
+
+  /v2/whatsapp/integrations:
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+
+    get:
+      operationId: getIntegrations
+      tags:
+        - whatsapp
+      summary: Listar integrações
+      description: |
+        Listar todas as integrações de WhatsApp.
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - integrations
+                properties:
+                  integrations:
+                    description: |
+                      Listar todas as integrações de WhatsApp.
+                    type: array
+                    example:
+                      - integration-1: Chip 1
+                      - integration-2: Chip 2
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        409:
+          $ref: '#/components/responses/ConflictError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X GET https://api.megasac.tallos.com.br/v2/whatsapp/integrations \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json'
+        - lang: JS
+          source: |
+            await fetch('https://api.megasac.tallos.com.br/v2/whatsapp/integrations', {
+              method: 'GET',
+              headers: {
+                'Authorization': 'Bearer afa924210118b9fd364a4da84d3fcdf7',
+                'Content-Type': 'application/json',
+              },
+            }).then(response => response.json());
+
+  /v2/whatsapp/integrations/official:
+    parameters:
+      - $ref: '#/components/parameters/HeaderAuthorization'
+
+    get:
+      operationId: getOfficialIntegrations
+      tags:
+        - whatsapp
+      summary: Listar integrações OFICIAIS
+      description: |
+        Listar todas as integrações OFICIAIS de WhatsApp.
+
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - integrations
+                properties:
+                  integrations:
+                    description: |
+                      Lista de todas as integrações oficiais do WhatsApp.
+                    type: array
+                    example:
+                      - key: integration-1
+                        label: Chip 1
+                      - key: integration-2
+                        label: Chip 2
+        400:
+          $ref: '#/components/responses/BadRequestError'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        403:
+          $ref: '#/components/responses/ForbiddenError'
+        404:
+          $ref: '#/components/responses/NotFoundError'
+        409:
+          $ref: '#/components/responses/ConflictError'
+
+      x-codeSamples:
+        - lang: CURL
+          source: |
+            curl -X GET https://api.megasac.tallos.com.br/v2/whatsapp/integrations/official \
+              -H 'Authorization: Bearer afa924210118b9fd364a4da84d3fcdf7' \
+              -H 'Content-Type: application/json'
+        - lang: JS
+          source: |
+            await fetch('https://api.megasac.tallos.com.br/v2/whatsapp/integrations/official', {
+              method: 'GET',
+              headers: {
+                'Authorization': 'Bearer afa924210118b9fd364a4da84d3fcdf7',
+                'Content-Type': 'application/json',
+              },
+            }).then(response => response.json());
+
+components:
+  securitySchemes:
+    JWT:  # arbitrary name for the security scheme
+      description: |
+        Enviar o cabeçalho HTTP `Authorization: Bearer <token>` na requisição.
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    HeaderAuthorization:
+      in: header
+      name: Authorization
+      description: Token de autorização gerado e fornecido pelo RD Station Conversas.
+      required: true
+      schema:
+        type: string
+        format: jwt
+
+    QueryPage:
+      in: query
+      name: page
+      description: Número da página da listagem.
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        default: 1
+
+    QueryLimit:
+      in: query
+      name: limit
+      description: Número de itens a serem retornados na página.
+      schema:
+        type: integer
+        format: int32
+        minimum: 1
+        maximum: 1000
+        default: 15
+
+  schemas:
+    Error:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          description: Mensagem de erro.
+          type: string
+          example: Propriedade "name" falhou na validação.
+        errors:
+          description: Lista de erros (opcional).
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                description: Descrição do campo com erro.
+                type: string
+                example: name
+              message:
+                description: Razão que gerou o erro.
+                type: string
+                example: Campo "name" não pode conter números.
+
+    Id:
+      type: string
+      format: hash
+      readOnly: true
+      example: '507f191e810c19729de860ea'
+
+    Address:
+      type: object
+      properties:
+        country:
+          description: País do endereço.
+          type: string
+          nullable: true
+          example: 'Brazil'
+        state:
+          description: Estado/Província do endereço.
+          type: string
+          nullable: true
+          example: 'Ceará'
+        city:
+          description: Cidade do endereço.
+          type: string
+          nullable: true
+          example: 'Fortaleza'
+        district:
+          description: Bairro/Distrito do endereço.
+          type: string
+          nullable: true
+          example: 'Centro'
+        street:
+          description: Rua do endereço.
+          type: string
+          nullable: true
+          example: 'Av. Principal'
+        number:
+          description: Número do endereço.
+          type: string
+          nullable: true
+          example: '1234'
+        complement:
+          description: Informações complementares para o endereço.
+          type: string
+          nullable: true
+          example: '5º andar'
+        zip_code:
+          description: Código Postal do endereço.
+          type: string
+          nullable: true
+          example: '12345-600'
+
+    Job:
+      type: object
+      properties:
+        title:
+          description: Título do trabalho.
+          type: string
+          nullable: true
+          example: 'Gerente'
+        department:
+          description: Departamento correspondente.
+          type: string
+          nullable: true
+          example: 'Controladoria'
+        company:
+          description: Companhia de contato.
+          type: string
+          nullable: true
+          example: 'RD Station'
+        email:
+          description: Endereço de e-mail para contato.
+          type: string
+          format: email
+          nullable: true
+          example: null
+        phone:
+          description: Telefone para contato.
+          type: string
+          pattern: \d+
+          nullable: true
+          example: '+55 11 999-888-777'
+        cnpj:
+          description: CNPJ ou outro identificador único do negócio.
+          type: string
+          pattern: \d{2}\.?\d{3}\.?\d{3}\/\d{4}\-\d{2}
+          nullable: true
+          example: '12.345.678/0009-10'
+        site:
+          description: Website do negócio.
+          type: string
+          format: url
+          example: https://tallos.com.br
+        occupation_area:
+          description: Área de ocupação.
+          type: string
+          nullable: true
+          example: null
+
+    Customer:
+      type: object
+      properties:
+        _id:
+          description: ID do cliente.
+          allOf:
+            - $ref: '#/components/schemas/Id'
+        full_name:
+          description: Nome completo do cliente.
+          type: string
+          example: 'John Tallos'
+        email:
+          description: Endereço de e-mail do cliente.
+          type: string
+          nullable: true
+          example: null
+        cel_phone:
+          description: Número de telefone do cliente.
+          type: string
+          pattern: \d+
+          example: '+55 11 999-888-777'
+        address:
+          description: Endereço do cliente.
+          allOf:
+            - $ref: '#/components/schemas/Address'
+        job:
+          description: Informações do trabalho do cliente.
+          allOf:
+            - $ref: '#/components/schemas/Job'
+
+    Contact:
+      type: object
+      properties:
+        _id:
+          description: ID do contato.
+          allOf:
+            - $ref: '#/components/schemas/Id'
+        full_name:
+          description: Nome completo do contato.
+          type: string
+          example: 'Tallos Example'
+        cel_phone:
+          description: Número de telefone do contato.
+          type: string
+          pattern: \d+
+          example: '+55 11 999-888-777'
+        integration:
+          description: Integração do WhatsApp a qual o contato será criado.
+          type: string
+          example: 'integration-1'
+        channel_metadata:
+          description: Integração do Whatsapp a qual o contato está atribuído atualmente.
+          type: object
+          example:
+            integration: 'integration-1'
+        email:
+          description: Endereço de e-mail do contato.
+          type: string
+          format: email
+          example: 'john.tallos@email.com'
+        birth_date:
+          description: Data de nascimento do contato.
+          type: string
+          example: 30/03/1992
+        cnpj:
+          description: Número de CNPJ do contato.
+          type: string
+          pattern: \d{2}\.?\d{3}\.?\d{3}\/\d{4}\-\d{2}
+          nullable: true
+          example: '12.345.678/0009-10'
+        cpf:
+          description: Número de CPF do contato.
+          type: string
+          pattern: \d{3}\.?\d{3}\.?\d{3}\-\d{2}
+          nullable: true
+          example: '123.456.789-10'
+        rg:
+          description: Número de RG do contato.
+          type: string
+          pattern: \d{1,2}\.?\d{3}\.?\d{3}\-\d
+          nullable: true
+          example: '12.345.678-9'
+        address:
+          description: Informações de endereço
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/Address'
+        customizable_field:
+          description: Informações adicionais do contato.
+          type: array
+          nullable: true
+          items:
+            type: object
+            properties:
+              label:
+                type: string
+              info:
+                type: string
+          example:
+            - label: 'Campo 1'
+              info: 'Informação do Campo 1'
+            - label: 'Campo 2'
+              info: 'Informação do Campo 2'
+        job:
+          description: Informações de trabalho
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/Job'
+        description:
+          description: Descrição
+          type: string
+          example: 'Lorem ipsum dolor sit amet...'
+        tags:
+          description: Tags
+          type: array
+          items:
+            type: string
+          example:
+            - 'tag1'
+            - 'tag2'
+        workflow_title:
+          description: Título do Workflow ao qual o contato será atribuído
+          type: string
+          example: workflow example
+        workflow_stage_title:
+          description: Título do Estágio do Workflow ao qual o contato será atribuído (Obrigatório se o Título do Workflow for submetido)
+          type: string
+          example: stage1
+        current_wallet:
+          description: Nome da carteira ao qual o contato será inserido
+          type: string
+          example: wallet1
+        department_name:
+          description: Nome do setor que o contato será direcionado
+          type: string
+          example: department name example
+        code:
+          description: Código do cliente
+          type: string
+          example: 123ABC
+        last_message_data:
+          description: Última mensagem enviada pelo cliente
+          type: object
+          properties:
+            content:
+              description: Conteúdo da mensagem.
+              type: string
+              example: 'Bom dia!'
+            type:
+              description: 'Tipo da mensagem.'
+              type: string
+              example:
+                - 'text'
+                - 'image'
+                - 'audio'
+            channel:
+              description: Canal de comunicação.
+              type: string
+              enum:
+                - 'email'
+                - 'instagram'
+                - 'megasac'
+                - 'messenger'
+                - 'telegram'
+                - 'telegram'
+                - 'whatsapp'
+            created_at:
+              description: Data hora que o cliente envio a mensagem
+              type: string
+              example: "2023-01-10T23:05:06.037Z"
+        employee:
+          description: ID do operador.
+          allOf:
+            - $ref: '#/components/schemas/Id'
+
+    Message:
+      type: object
+      required:
+        - sent_by
+        - message
+        - operator
+      properties:
+        message:
+          type: string
+          description: Texto da mensagem.
+        sent_by:
+          type: string
+          description: 'Quem está enviando a mensagem: Operador (operator) ou ChatBot (bot)'
+          enum:
+            - operator
+            - bot
+        operator:
+          description: ID do empregado que está enviando e mensagem.
+          allOf:
+            - $ref: '#/components/schemas/Id'
+        integration:
+          description: ID da integração do WhatsApp pelo qual a mensagem será enviada
+          type: string
+          example: 'integration-1'
+
+    Employee:
+      type: object
+      properties:
+        id:
+          description: ID do empregado.
+          allOf:
+            - $ref: '#/components/schemas/Id'
+        name:
+          description: Nome do empregado.
+          type: string
+          example: 'John Tallos'
+        email:
+          description: Endereço de e-mail do empregado.
+          type: string
+          format: email
+          example: 'john.tallos@email.com'
+
+    ContactWhatsappBusiness:
+      type: object
+      required:
+        - full_name
+        - cel_phone
+        - integration
+      properties:
+        id:
+          description: ID do contato.
+          allOf:
+            - $ref: '#/components/schemas/Id'
+        full_name:
+          description: Nome completo do contato.
+          type: string
+          example: 'John Tallos'
+        cel_phone:
+          description: Número de telefone do contato.
+          type: string
+          pattern: \d+
+          example: '+55 11 999-888-777'
+        integration:
+          description: Integração do WhatsApp a qual o contato será criado e atribuído.
+          type: string
+          example: 'integration-1'
+        email:
+          description: Endereço de e-mail do contato.
+          type: string
+          format: email
+          example: 'john.tallos@email.com'
+        birth_date:
+          description: Data de natalidade do contato.
+          type: string
+          format: date
+          example: '30/03/1992'
+        cnpj:
+          description: Número de CNPJ do contato.
+          type: string
+          pattern: \d{2}\.?\d{3}\.?\d{3}\/\d{4}\-\d{2}
+          nullable: true
+          example: '12.345.678/0009-10'
+        cpf:
+          description: Número de CPF do contato.
+          type: string
+          pattern: \d{3}\.?\d{3}\.?\d{3}\-\d{2}
+          nullable: true
+          example: '123.456.789-10'
+        rg:
+          description: Número de RG do contato.
+          type: string
+          pattern: \d{1,2}\.?\d{3}\.?\d{3}\-\d
+          nullable: true
+          example: '12.345.678-9'
+        address:
+          description: Informações de endereço
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/Address'
+        job:
+          description: Informações de trabalho
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/Job'
+        description:
+          description: Descrição
+          type: string
+          example: Lorem ipsum dolor sit amet...
+        tags:
+          description: Tags
+          type: array
+          items:
+            type: string
+          example:
+            - 'tag1'
+            - 'tag2'
+        workflow_title:
+          description: Título do Workflow ao qual o contato será atribuído
+          type: string
+          example: workflow example
+        workflow_stage_title:
+          description: Título do Estágio do Workflow ao qual o contato será atribuído (Obrigatório se o Título do Workflow for submetido)
+          type: string
+          example: stage1
+        current_wallet:
+          description: Nome da carteira ao qual o contato será inserido
+          type: string
+          example: wallet1
+        whatsapp_name:
+          description: Nome da integração do Whatsapp Business
+          type: string
+          example: Whatsapp vendas
+        department_name:
+          description: Nome do setor que o contato será direcionado
+          type: string
+          example: department name example
+        code:
+          description: Código do cliente
+          type: string
+          example: 123ABC
+
+    PutContactWhatsappBusiness:
+      type: object
+      required:
+        - full_name
+        - cel_phone
+        - integration
+      properties:
+        full_name:
+          description: Nome completo do contato.
+          type: string
+          example: 'John Tallos'
+        cel_phone:
+          description: Número de telefone do contato.
+          type: string
+          pattern: \d+
+          example: '+55 11 999-888-777'
+        integration:
+          description: Integração do WhatsApp a qual o contato será criado e atribuído.
+          type: string
+          example: 'integration-1'
+        email:
+          description: Endereço de e-mail do contato.
+          type: string
+          format: email
+          example: 'john.tallos@email.com'
+        birth_date:
+          description: Data de natalidade do contato.
+          type: string
+          format: date
+          example: '30/03/1992'
+        cnpj:
+          description: Número de CNPJ do contato.
+          type: string
+          pattern: \d{2}\.?\d{3}\.?\d{3}\/\d{4}\-\d{2}
+          nullable: true
+          example: '12.345.678/0009-10'
+        cpf:
+          description: Número de CPF do contato.
+          type: string
+          pattern: \d{3}\.?\d{3}\.?\d{3}\-\d{2}
+          nullable: true
+          example: '123.456.789-10'
+        rg:
+          description: Número de RG do contato.
+          type: string
+          pattern: \d{1,2}\.?\d{3}\.?\d{3}\-\d
+          nullable: true
+          example: '12.345.678-9'
+        address:
+          description: Informações de endereço
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/Address'
+        job:
+          description: Informações de trabalho
+          type: object
+          allOf:
+            - $ref: '#/components/schemas/Job'
+        description:
+          description: Descrição
+          type: string
+          example: Lorem ipsum dolor sit amet...
+        tags:
+          description: Tags
+          type: array
+          items:
+            type: string
+          example:
+            - 'tag1'
+            - 'tag2'
+        cel_phone_secondary0:
+          description: Número de telefone alternativo
+          type: string
+          pattern: \d+
+          example: '+55 11 999-888-777'
+        cel_phone_secondary1:
+          description: Número de telefone alternativo
+          type: string
+          pattern: \d+
+          example: '+55 11 999-888-777'
+        whatsapp_name:
+          description: Nome da integração do Whatsapp Business
+          type: string
+          example: Whatsapp vendas
+        department_name:
+          description: Nome do setor que o contato será direcionado
+          type: string
+          example: department name example
+        code:
+          description: Código do cliente
+          type: string
+          example: 123ABC
+
+    Wallet:
+      description: Nome da carteira.
+      type: string
+      example: 'Wallet 01'
+
+    Workflow:
+      type: object
+      properties:
+        title:
+          description: Título do workflow.
+          type: string
+          example: 'Workflow de Teste'
+        stages:
+          description: Lista de etapas do workflow.
+          type: array
+          items:
+            type: string
+          example:
+            - 'Flollow up 1'
+            - 'Flollow up 2'
+
+    Flow:
+      type: object
+      properties:
+        id:
+          description: ID do fluxo.
+          allOf:
+            - $ref: '#/components/schemas/Id'
+        title:
+          description: Título do fluxo.
+          type: string
+          example: 'Fluxo de Teste'
+
+    ResponsePostContact200:
+      title: status response
+      type: object
+      properties:
+        message:
+          description: 'Message of callback'
+          type: string
+          example: Success created contact
+        data:
+          description: 'Data callback of customer'
+          type: object
+          $ref: '#/components/schemas/Contact'
+      required:
+        - message
+
+    Report:
+      type: object
+      properties:
+        id:
+          description: ID do item do relatório.
+          type: integer
+          format: int32
+        title:
+          description: Título do relatório.
+          type: string
+        description:
+          description: Descrição do relatório.
+          type: string
+        createdAt:
+          description: Date de criação do relatório.
+          type: string
+          format: date
+        updatedAt:
+          description: Date de atualização do relatório.
+          type: string
+          format: date
+
+  responses:
+    BadRequestError:
+      description: Bad request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    UnauthorizedError:
+      description: Access Token missing or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    ForbiddenError:
+      description: Not authorized to access such resource
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    NotFoundError:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    ConflictError:
+      description: Error to process request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    UnprocessableEntityError:
+      description: Unprocessable Content.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+
+    InternalServerError:
+      description: Internal Server Error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
